@@ -1,0 +1,225 @@
+﻿@{
+    Layout = null;
+}
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <title>闪鸟数据</title>
+    <link rel="stylesheet" href="../layui/css/layui.css" />
+    <link rel="stylesheet" href="../VUI/CSS/VUI.css" />
+    <link rel="stylesheet" href="CSS/JimmyMenu.css" />
+    <style>
+        @@font-face {
+            font-family: 'iconfont';
+            src: url('/Fonts/iconfont.eot');
+            src: url('/Fonts/iconfont.eot?#iefix') format('embedded-opentype'), url('/Fonts/iconfont.woff2') format('woff2'), url('/Fonts/iconfont.woff') format('woff'), url('/Fonts/iconfont.ttf') format('truetype'), url('/Fonts/iconfont.svg#iconfont') format('svg');
+        }
+
+        .iconfont {
+            font-family: "iconfont" !important;
+            font-size: 14px;
+            font-style: normal;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+
+        html,
+        body {
+            margin: 0px;
+            padding: 0px;
+            height: 100%;
+            font-family: Microsoft YaHei;
+            font-size: 13px;
+            background: #252525;
+        }
+
+        img {
+            vertical-align: middle;
+        }
+
+        #SNDataX_Left {
+            float: left;
+            width: 200px;
+            height: 100%;
+            background: #282828;
+            box-shadow: 0 0 8px 0 #1f1f1f;
+        }
+
+        #SNDataX_Right {
+            position: relative;
+            box-sizing: border-box;
+            margin-left: 201px;
+            height: 100%;
+            padding-top: 60px;
+        }
+
+        #SNDataX_TopTitle {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 60px;
+            line-height: 60px;
+            border-bottom: solid 1px #333;
+            background: #282828;
+        }
+
+            #SNDataX_TopTitle .left {
+                float: left;
+                padding-left: 20px;
+                font-size: 13px;
+                color: #fff;
+            }
+
+            #SNDataX_TopTitle .right {
+                float: right;
+                padding-right: 20px;
+                font-size: 13px;
+                color: #ffffff;
+            }
+
+                #SNDataX_TopTitle .right span {
+                    vertical-align: middle;
+                }
+
+        /*内容区样式*/
+        #SNDataX_APPBody {
+            height: 100%;
+            overflow-y: scroll;
+            background: #282828;
+            overflow-x: hidden;
+        }
+
+        .list_unlogin {
+            width: 100px;
+            height: 36px;
+            background: rgba(255, 255, 255, 0.2);
+            box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.2);
+            border-radius: 4px;
+            position: absolute;
+            right: 20px;
+            top: 65px;
+            line-height: 36px;
+            text-align: center;
+        }
+
+            .list_unlogin a {
+                color: #fff;
+            }
+
+            .list_unlogin span {
+                font-size: 12px;
+                margin-left: 10px;
+            }
+
+            .list_unlogin:before {
+                content: "";
+                border: 8px transparent solid;
+                border-bottom: 8px rgba(255, 255, 255, 0.2) solid;
+                width: 0;
+                height: 0;
+                position: absolute;
+                top: -16px;
+                left: 0;
+                right: 0;
+                margin: 0 auto;
+            }
+
+        .showhide {
+            display: none;
+        }
+    </style>
+
+</head>
+<body>
+    <!--左侧区域-->
+    <div id="SNDataX_Left">
+        <div>
+            <a id="JimmyLogo_L" href="/Member/"><img src="Images/LOGO.png" width="200" height="60" /></a>
+            <a id="JimmyLogo_S" href="/Member/" style="display: none;"><img src="Images/LOGO_Small.png" width="80" height="60" /></a>
+        </div>
+
+        <div id="JimmyMenu">
+            <a href="#StartPage" hrefdata="#StartPage" class="MainMenuItem">
+                <cite></cite><i class="iconfont icon">&#xe65a;</i><span class="title">工作台</span>
+            </a>
+            <a href="#MyFavorite" hrefdata="#MyFavorite" class="MainMenuItem">
+                <cite></cite><i class="iconfont icon">&#xe630;</i><span class="title">我的收藏</span>
+            </a>
+            <hr class="split" />
+            <a hrefdata="#SubMenuGroup1" class="MainMenuItem">
+                <cite></cite><i class="iconfont icon">&#xe638;</i><span class="title">热门素材</span><i class="iconfont arrow">&#xe639;</i>
+            </a>
+            <div class="SubMenu">
+                <a href="#Video" hrefdata="#Video" class="SubMenuItem"><cite></cite><span>热门视频</span></a>
+                <a href="#Music" hrefdata="#Music" class="SubMenuItem"><cite></cite><span>热门音乐</span></a>
+                <a href="#Topic" hrefdata="#Topic" class="SubMenuItem"><cite></cite><span>热门话题</span></a>
+                <a href="#HotVideo" hrefdata="#HotVideo" class="SubMenuItem"><cite></cite><span>示例</span></a>
+            </div>
+        </div>
+
+    </div>
+
+    <!--右侧区域-->
+    <div id="SNDataX_Right">
+        <!--右侧顶部-->
+        <div id="SNDataX_TopTitle">
+            <div class="left">
+                <i id="btnToogleJimmyMenu" class="iconfont" style="color: #E9445A;cursor:pointer;" onclick="ToogleJimmyMenu();">&#xe602;</i><span id="Jimmy_PageTitle" style="margin-left:8px;">热门视频</span>
+            </div>
+            <div class="right" id="extentList">
+                <span class="iconfont">&#xe605;</span><span class="iconfont" style="margin: 0 5px;">&#xe64e;</span>
+                <img src="@(ViewBag.HeadImg)" width="28" height="28" border="0" style="border-radius:14px;" /><span style="margin-left:10px;">@(ViewBag.NickName)</span>
+                <div class="list_unlogin showhide">
+                    <a href="javascript:Logout()"><i class="iconfont">&#xe613;</i><span>退出登录</span></a>
+                </div>
+            </div>
+
+        </div>
+
+        <!--右侧内容区-->
+        <div id="SNDataX_APPBody">
+        </div>
+    </div>
+    <script src="~/layui/layui.all.js"></script>
+    <script type="text/javascript">
+        var jQuery;
+        var $;;
+        ! function () {
+            $ = layui.$;
+            jQuery = layui.$;
+
+            $("#extentList").hover(function () {
+                $(".list_unlogin").toggleClass("showhide");
+            })
+        }();
+
+        //退出登录
+        function Logout() {
+            $.ajax({
+                url: "/Member/Index/Logout",
+                type: "get",
+                ShowLoading: false,
+                dataType: "json",
+                success: function (res) {
+                    if (res.StatusCode == "Success") {
+                        location.href = "/";
+                        return;
+                    }
+                }
+            });
+        }
+    </script>
+    <script src="/VUI/VUI.min.js"></script>
+    <script src="/Member/JS/Index.js"></script>
+    <script src="/Member/JS/JimmyMenu.js"></script>
+    <script src="/Member/JS/LazyPage.js"></script>
+
+    <script src="~/Scripts/echarts.min.js"></script>
+    <script src="~/Scripts/extents/snchart.js"></script>
+    <script src="~/Scripts/qrcode.min.js"></script>
+    <script src="~/layer/layer.js"></script>
+</body>
+</html>

@@ -1,0 +1,56 @@
+﻿@{
+    Layout = null;
+}
+<!-- 导航区 -->
+<div class="layui-card" style="width:100%!important;height:36px;line-height:36px;">
+    <span class="layui-breadcrumb" lay-separator="/" style="padding-left:15px;">
+        <a href="#StartPage">主页</a>
+        <a><cite>内容管理</cite></a>
+        <a><cite>T1管理</cite></a>
+    </span>
+</div>
+
+<div class="layui-card" style="margin:15px;">
+
+    <!-- 搜索区 -->
+    <div class="layui-card-body" style="border-bottom: 1px solid #f6f6f6;">
+        <form id="form_Search" name="form_Search" method="post" action="" class="layui-form">
+            <input id="hddLastID" name="hddLastID" type="hidden" value="999999999" />
+            <input id="hddSort" name="hddSort" type="hidden" value="1" />
+            <div class="GlobalSearchFrom">
+                <span id="btnAdd" class="layui-btn layui-btn-normal"><i class="layui-icon layui-icon-add-1"></i>添加</span>
+                <span id="btnDelAll" class="layui-btn layui-btn-normal"><i class="layui-icon layui-icon-delete"></i>批量删除</span>
+                <span class="split"></span>
+                <p>标题：</p>
+                <span><input type="text" name="txtTitle" autocomplete="off" value="" class="layui-input" style="width: 142px"></span>
+                <span id="btnSearch" class="layui-btn layui-btn-normal"><i class="layui-icon layui-icon-search"></i> 搜索</span>
+            </div>
+        </form>
+    </div>
+
+    <!-- 数据列表区 -->
+    <div id="ListContent" class="layui-card-body">
+    </div>
+    <div LazyPage_Loading style="display:none;">正在加载......</div>
+    <div LazyPage_NoMore style="display:none;">没有更多了</div>
+    <div LazyPage_Message1 style="display:none;">当前为免费版会员，仅可查看50个结果，立即升级会员版本，可查看更多数据</div>
+    <div LazyPage_Message2 style="display:none;">当前为高级版会员，仅可查看100个结果，立即升级会员版本，可查看更多数据</div>
+    <div LazyPage_Message3 style="display:none;">当前为豪华版会员，仅可查看500个结果，立即升级会员版本，可查看更多数据</div>
+    <div LazyPage_Message4 style="display:none;">当前为专业版会员，仅可查看1500个结果，立即升级会员版本，可查看更多数据</div>
+</div>
+
+<script type="text/javascript">
+;!function(){
+
+}();
+layui.form.render();
+
+//初始化懒加载
+    $.LazyPage({ TargetID: "SNDataX_APPBody", Url: "Video_Items", DataFormID: "form_Search", DataBoxID: "ListContent", MemberLevel: 1, MemberDataLimit:500});
+
+//搜索
+ $("#btnSearch").on("click", function(){
+     $.LazyPage_Refresh("SNDataX_APPBody");
+})
+
+</script>

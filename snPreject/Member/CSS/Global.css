@@ -1,0 +1,320 @@
+﻿/*Layui全局样式重写 table自适应宽高，显示全局滚动条 */
+.layui-table-body{
+	overflow:visible;
+}
+.layui-table-box {
+    overflow: visible;
+}
+.layui-table-header {
+    overflow: visible;
+}
+
+/*Layui全局样式重写,搜索小图标*/
+.layui-icon-search:before{
+    vertical-align:bottom;
+}
+
+/*Layui全局样式重写 table行高，填充，字体大小，表头粗体，取消单元格中图片最小宽度限制 */
+.layui-table-view .layui-table th{color:#09348d; font-weight:bold;}
+.layui-table-cell{
+    font-size: 13px;    
+}
+.layui-table th .layui-table-cell{
+    height: 36px;
+    line-height:36px;
+    padding: 0 6px;
+}
+.layui-table td .layui-table-cell{
+	height: auto;
+    line-height:20px;
+    padding: 8px 6px;
+    overflow: visible;
+    text-overflow: inherit;
+    white-space: normal;
+    word-wrap: break-word;
+}
+
+.layui-table-view .layui-table td, .layui-table-view .layui-table th{
+	padding:0;
+}
+.layui-table img{
+	max-width:none;
+}
+
+/*Layui全局样式重写 table某列设置style为direction:ltr时，如果内容超出，恢复使用layui默认样式 */
+.layui-table td[style*="direction"]>div{
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+}
+/*Layui全局样式重写 table页码按钮颜色 */
+.layui-laypage .layui-laypage-curr .layui-laypage-em{
+	background-color:#1E9FFF;
+}
+
+/*Layui全局样式重写 table复选框选中颜色 */
+.layui-form-checkbox[lay-skin=primary]:hover i{
+	border-color:#1E9FFF;
+}
+.layui-form-checked[lay-skin=primary] i{
+	border-color:#1E9FFF;
+	background-color:#1E9FFF;
+}
+
+/*Layui全局样式重写 文本框禁用时的颜色 */
+input.layui-disabled{
+	background-color:#f5f5f5;
+}
+
+/*Layui全局样式重写 文本框、下拉列表、多行文本框高度 */
+.layui-input, .layui-select, .layui-textarea{
+    height:33px;
+    padding:0 5px;
+}
+
+/*Layui全局样式重写 layer自适应高度 */
+.layui-layer-content{
+	height:auto!important;
+	min-height:30px;
+    overflow:visible !important;
+}
+
+/*Layui全局样式重写 nav选中菜单背景色*/
+.layui-nav-tree .layui-nav-bar{background-color:#0079D2;}
+.layui-nav-tree .layui-nav-child dd.layui-this, .layui-nav-tree .layui-nav-child dd.layui-this a, .layui-nav-tree .layui-this, .layui-nav-tree .layui-this>a, .layui-nav-tree .layui-this>a:hover{
+	background-color:#0079D2;
+}
+
+/*Layui全局样式重写 开关控件背景色*/
+.layui-form-onswitch {
+    border-color:#1E9FFF;
+    background-color:#44AFFF;
+}
+
+ /*Layui全局样式重写 selsct的选中颜色*/
+.layui-form-select dl dd.layui-this {
+    background-color:#44AFFF;
+}
+
+.layui-btn{
+   height:33px;
+   line-height:31px;
+}
+ /*Layui全局样式重写 box阴影效果*/
+.layui-border-box{
+    box-shadow: 0 0px 10px rgba(0, 0, 0, 0.08);
+}
+
+ /*Layui全局样式重写 按钮XS大小时的样式*/
+.layui-btn-xs{
+    height:23px;
+    line-height:23px;
+}
+/*Layui全局样式重写 tab选项卡选中颜色*/
+.layui-tab-brief > .layui-tab-title .layui-this {
+	color:#1E9FFF!important;
+}
+.layui-tab-brief>.layui-tab-more li.layui-this:after, .layui-tab-brief>.layui-tab-title .layui-this:after {
+	border:none;
+	border-radius:0;
+	border-bottom:2px solid #1E9FFF!important;
+}
+
+
+/*顶部Header样式*/
+#SNDataX_Header{
+	position:absolute;top:0;left:0;width:100%;height:43px;line-height:43px;background:#fff;box-shadow: 0 1px 2px 0 rgba(0,0,0,.1);
+}
+#SNDataX_Header .left{float:left;padding-left:210px;}
+#SNDataX_Header .right{float:right;padding-right:15px;}
+.HeaderIcon{
+	position:relative;display:inline-block;margin:0 10px;text-align:center;color:#333;
+}
+.HeaderIcon::before {
+	content: "";
+	position: absolute;
+	top: 0;
+	width: 0;
+	border-top: 2px solid #03C;
+	transition: 0.2s all linear;
+}
+.HeaderIcon:hover::before {
+	width: 100%;
+	left: 0;
+}
+.HeaderIcon .layui-badge-dot {
+	position: absolute;
+	top:50%;
+	color:#F60;
+	margin: -10px -50px 0px 10px;
+}		
+.HeaderDropdown {
+	position: relative;
+	cursor:pointer;
+	min-width:150px;
+}
+.HeaderDropdown:hover .layui-icon-triangle-d{
+	display:inline-block;
+	transition: transform 0.4s ease-out;
+}
+.HeaderDropdown:hover .layui-icon-triangle-d{
+	transform: rotate(180deg);
+}
+.HeaderDropdown .dropdown-content {
+	display: none;
+	position: absolute;
+	top:42px;
+	background-color: #fff;
+	width: 100%;
+	border:solid 1px #f5f5f5;
+	border-top:none;
+	z-index:999999;
+	border-bottom-right-radius:8px;
+	border-bottom-left-radius:8px;
+}
+.HeaderDropdown .dropdown-content a{
+	display:block;
+	border-radius:8px;
+}
+.HeaderDropdown .dropdown-content a:hover{
+	background:#f9f9f9;
+}
+.HeaderDropdown:hover .dropdown-content {
+	display: block;
+}
+.SNDataX_Logo1{
+	width:200px;height:60px;line-height:60px;padding-left:20px;background:#0079D2;color:#FC0;font-size:18px;
+}
+.SNDataX_Logo2{
+	width:60px;height:60px;line-height:60px;background:#0079D2;color:#fff;font-size:25px;text-align:center;display:none;
+}
+#SNDataX_APPBody{
+	position:absolute;left: 200px;top: 45px;right: 0;bottom: 0;overflow:auto;background:#eee;
+}
+/*后台框架样式结束*/
+
+/*搜索区样式*/
+.GlobalSearchFrom {
+    zoom: 1;
+    display: inline-flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+.GlobalSearchFrom p {
+    display:inline-block;
+    line-height: 38px;
+    margin-top: 12px;
+}
+.GlobalSearchFrom span {
+    display:inline-block;
+    line-height: 38px;
+    padding-right: 20px;
+    margin-top: 10px;
+}
+.GlobalSearchFrom span.split {
+    height:33px;
+    margin-top:15px;
+    width:1px;
+	border-right:solid 1px #ddd;
+    margin-right:18px;
+}
+.GlobalSearchFrom span.layui-btn{
+    line-height:33px;
+    margin-top: 15px;
+    padding-left:12px;
+    padding-right:12px;
+}
+
+.GlobalSearchFrom .layui-form-checkbox[lay-skin=primary] span {
+    margin-top:0px;
+}
+
+.GlobalSearchFrom input {
+    display: inline-block;
+    vertical-align: bottom;
+}
+
+/*表单样式*/
+.FormTable{margin:25px;}
+.FormTable th{
+	padding-left:20px;height:50px;font-weight:normal;text-align:left;
+}
+.FormTable th.start{
+	background:url(icon_asterisk.gif) no-repeat 0 center;
+}
+.FormTable td{
+	line-height: 38px;
+}
+
+/*Page页面按钮样式*/
+.Page_btnBar{
+	position:fixed;width:100%;height:60px;line-height:60px;bottom:0px;background:#eee;border-top:solid 1px #eee;z-index:999999;
+}
+
+/*表格操作列中，下拉菜单的样式*/
+.SNDataX_MoreMenu {
+    position: relative;
+    display: inline-block;
+    margin-left: 5px;      
+}
+
+.SNDataX_MoreMenu > ul{
+    display: none;
+    position: absolute;
+    top:22px;
+    right: 0px;
+    white-space: nowrap;
+    box-shadow: 0 2px 4px rgba(0,0,0,.12);
+    border: 1px solid #d2d2d2;
+    background-color: #fff;
+    border-radius: 2px;
+    z-index: 9999 !important;
+    /*line-height:none;*/
+}
+.SNDataX_MoreMenu > span:first-child {
+    display: inline-block;
+    background: #1E9FFF;
+    height: 22px;
+    padding: 0 8px;
+    line-height: 22px;
+    font-size: 12px;
+    border-radius: 2px;
+    cursor: pointer;
+    color: #fff;
+    white-space: nowrap;
+    text-align: center;
+}
+.SNDataX_MoreMenu > span:after {
+    content: '▶';
+    padding-left:4px;
+}
+.SNDataX_MoreMenu:hover > ul {
+    display: block!important;
+    border: solid 1px #97D2FF;
+}
+.SNDataX_MoreMenu:hover > span:first-child {
+    background-color:#0084E6;
+}
+
+.SNDataX_MoreMenu li {
+    cursor: pointer;
+}
+.SNDataX_MoreMenu li:hover {
+    background: #eee;                
+}
+.SNDataX_MoreMenu li > * {
+    color: #000;
+    display: inline-block;
+    padding: 0px 15px;
+    line-height: 36px;
+    width:100%;
+}
+/*============================================Layui table header滚动固定样式=====================================================*/
+.sfixed{
+    position:fixed;
+    top:43px;
+    z-index:9999;
+}
+/*============================================Layui table header滚动固定=====================================================*/

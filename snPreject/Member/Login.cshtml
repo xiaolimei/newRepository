@@ -1,0 +1,126 @@
+﻿<link type="text/css" href="/Member/CSS/Login.css" rel="stylesheet" />
+
+<div style="width:400px; height:auto; border-radius:10px; overflow:hidden; background:#fff;">
+    <div id="login" class="wrap_box" style="min-height:400px">
+
+        <div class="sn_login">
+            <ul id="login_Tab">
+                <li><a class="hover">扫码登录</a></li>
+                <li><a>手机登录</a></li>
+            </ul>
+            <div class="changeLogin ewmLogin showCurrent">
+                <div class="loginWeixinPicture">
+                    <img id="login_loading" src="/Member/Images/loading.gif" style="width:15px; height:15px;">
+                    <img id="login_qrcodeWX" alt="二维码">
+                </div>
+                <div id="login_qrcodeFailed" class="maskLogin">二维码获取失败<a onclick="RefreshLoginQrCode()"><img src="/Member/Images/update.gif" alt="">刷新</a></div>
+                <span id="login_qrcodeInfo" style="color:red;text-align:center"/>
+                <div class="buttomLogin">打开<img src="/Member/Images/wx_icon.jpg">扫一扫，<strong>关注公众号</strong>后即可注册/登录</div>
+            </div>
+            <div id="loginForAccount" class="changeLogin phoneLogin" />
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var loginTimer, loginTicket;
+
+    $(document).ready(function () {
+        $("#login_loading").show();
+        $("#login_qrcodeWX").hide();
+
+        GetLoginQrCode();
+    });
+
+    //切换效果
+    $(".sn_login ul li").click(function (event) {
+        event.preventDefault();
+        $(".sn_login ul li a").removeClass("hover");
+        $(".changeLogin").removeClass("showCurrent");
+        $(this).children("a").addClass("hover");
+
+        var loginIndex = $(this).index();
+        if (loginIndex == 0) {
+            GetLoginQrCode();
+        }
+        else {
+            clearInterval(loginTimer);
+
+            $.ajax({
+                url: "/Member/LoginForAccount",
+                type: "get",
+                ShowLoading: false,
+                dataType: "text",
+                success: function (res) {
+                    $("#loginForAccount").html(res);
+                }
+            });
+        }
+
+        $(".changeLogin").eq(loginIndex).addClass("showCurrent");
+    });
+
+    //刷新二维码
+    function RefreshLoginQrCode() {
+        GetLoginQrCode();
+    }
+
+    //获取二维码
+    function GetLoginQrCode() {
+        $.ajax({
+            url: "/Member/Login/GetQRCode_Login",
+            type: "get",
+            ShowLoading: false,
+            dataType: "json",
+            success: function (res) {
+                if (res.StatusCode == "Success") {
+                    if (res.Ticket == null) {
+                        $("#login_qrcodeFailed").show();
+                    }
+                    else {
+                        $("#login_loading").hide();
+                        $("#login_qrcodeWX").show().attr("src", res.QrCode);
+                        loginTicket = res.Ticket;
+                        $("#login_qrcodeFailed").hide();
+                        IntervalLoginQrStatus();
+                    }
+                }
+            }
+        });
+    }
+
+    //检查二维码状态
+    function IntervalLoginQrStatus() {
+        var num = 30;
+        loginTimer = setInterval(function CheckLoginQrStatus() {
+            num--;
+
+            $.ajax({
+                url: "/Member/Login/CheckQrStatus_Login?ticket=" + loginTicket,
+                type: "get",
+                ShowLoading: false,
+                dataType: "json",
+                success: function (res) {
+                    if (res.StatusCode == "Success") {
+                        if (res.IsDisable == true) {
+                            clearInterval(loginTimer);
+                            $("#login_qrcodeInfo").html("登录失败，您的账号已被禁用！");
+                            return;
+                        }
+
+                        if (res.QrStatus == true) {
+                            location.href = "/Member/";
+                            return;
+                        }
+                    }
+                }
+            });
+
+            if (num == 0) {
+                clearInterval(loginTimer);
+                layer.closeAll();
+            }
+
+        }, 1000);
+    }
+</script>

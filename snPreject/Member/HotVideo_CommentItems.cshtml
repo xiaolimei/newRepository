@@ -1,0 +1,38 @@
+﻿@{
+    Layout = null;
+}
+@model MongoPaged<CommentMongo>
+@if (Model != null && Model.Data != null)
+{
+    foreach (var item in Model.Data)
+    {
+        <div class="commentItem">
+            <img src="@item.comment_info.user.avatar_thumb.url_list[0]" alt="">
+            <div class="commentInfo">
+                <div class="txt">
+                    <span>@item.comment_info.user.nickname</span>
+                    <span>@item.comment_info.text</span>
+                    <span>@ViewHelper.FormatTimestamp(item.comment_info.create_time)</span>
+                </div>
+                <div class="commentNum">@ViewHelper.ShowUnitNum(item.comment_info.digg_count)</div>
+            </div>
+        </div>
+        if (item.comment_info.reply_comment != null)
+        {
+            foreach (var itemReply in item.comment_info.reply_comment)
+            {
+                <div class="commentItem">
+                    <img src="@itemReply.user.avatar_thumb.url_list[0]" alt="">
+                    <div class="commentInfo">
+                        <div class="txt">
+                            <span>@itemReply.user.nickname</span>
+                            <span>@itemReply.text</span>
+                            <span>@ViewHelper.FormatTimestamp(itemReply.create_time)</span>
+                        </div>
+                        <div class="commentNum">@ViewHelper.ShowUnitNum(itemReply.digg_count)</div>
+                    </div>
+                </div>
+            }
+        }
+    }
+}

@@ -1,0 +1,718 @@
+﻿ <!--手机登录-->
+<div id="loginMobile" class="changeLogin phoneLogin" style="display:block">
+    <form id="form_Login" name="form_Login" method="post" class="formlogin">
+        <div class="username inputbox inputchange">
+            <img src="/Member/Images/phone.png" alt="电话" />
+            <input type="text" id="txtLoginMobile" name="Mobile" placeholder="请输入绑定手机号码" autocomplete="off" />
+            <i class="iconfont" id="login_mobileVerify"></i>
+        </div>
+        <div class="userpass inputbox inputchange">
+            <img src="/Member/Images/passw.png" alt="密码" />
+            <input type="password" id="txtLoginPassword" name="Password" placeholder="请输入登录密码" autocomplete="new-password" />
+            <i class="iconfont" id="login_pwdVerify"></i>
+        </div>
+        <div class="checkinput">
+            <p><input type="checkbox" id="login_chkSaveAccount"><label for="login_chkSaveAccount" style="cursor:pointer">记住我的账号</label></p>
+            <a href="javascript:UpdatePwd()" class="passcolor">忘记密码？</a>
+        </div>
+        <div class="btn_login inputbox">
+            <input type="button" value="登录" onclick="AJAX_Login_Save()" />
+        </div>
+        <p id="login_errorInfo" style="color:red;text-align:center" />
+    </form>
+    <p class="buttom_p">尚未绑定手机登录？<a href="javascript:BindMobile()">立即绑定</a></p>
+</div>
+
+<!--绑定手机号-->
+<div id="bindMobile" class="wrap_box" style="display:none; ">
+    <div class="bindphonediv bpeheight">
+        <div class="resettop">
+            <dl>
+                <dt></dt>
+                <dd><span class="hover">验证微信</span><span>填写信息</span><span>完成绑定</span></dd>
+            </dl>
+        </div>
+        <div id="bindMobile1" class="content01 bpcontentbox">
+            <h3>验证微信</h3>
+            <div class="yz">
+                <div class="loginWeixinPicture">
+                    <img id="bindMobile_loading" src="/Member/Images/loading.gif" style="width:15px; height:15px;">
+                    <img id="bindMobile_qrcodeWX" alt="二维码" style="display:none">
+                </div>
+                <div id="bindMobile_qrcodeFailed" class="maskLogin">二维码获取失败<a onclick="RefreshBindMobilenQrCode()"><img src="/Member/Images/update.gif" alt="">刷新</a></div>
+            </div>
+            <span id="bindMobile_qrcodeInfo" style="color:red;text-align:center" />
+            <p>请使用注册的微信号扫一扫验证</p>
+        </div>
+        <div id="bindMobile2" class="bpcontent02 bpcontentbox" style="display:none;">
+            <form id="form_BindMobile" name="form_BindMobile" class="bpform">
+                <input type="hidden" id="hddBindMobileOpenID" name="OpenID" />
+                <div class="bpverification">
+                    <div class="inputbox bpinput resetbox">
+                        <img src="/Member/Images/phone.png" alt="手机号">
+                        <input type="text" id="txtBindMobile" name="Mobile" placeholder="请输入绑定手机号" autocomplete="off">
+                        <span id="bindMobile_Verify" style="color:red;font-size:20px;" />
+                    </div>
+                    <div class="inputbox bpinput resetbox">
+                        <img src="/Member/Images/yzm.jpg" alt="图形验证码">
+                        <input type="text" id="txtBindMobileVerifyCode" name="VerifyCode" placeholder="请输入图形验证码" autocomplete="off">
+                        <span class="graph_yzm">
+                            <img id="imgVerifyCode" src="" style=" max-width:100%;height:100%; display:block;" />
+                        </span>
+                        <span id="bindMobile_CodeVerify" style="color:red;font-size:20px;" />
+                    </div>
+                    <div class="inputbox bpinput resetbox" style="border-bottom:none;">
+                        <img src="/Member/Images/yzm.jpg" alt="短信验证码">
+                        <input type="text" id="txtBindMobileSMSVCode" name="SMSVCode" placeholder="请输入验证码" autocomplete="off">
+                        <button type="button" class="get_yzm" onclick="GetBindMobileSMSVCode()" id="btnSendSMSVCode_BindMobile" formnovalidate title="获取验证码">获取验证码</button>
+                        <span id="bindMobile_SMSVCodeVerify" style="color:red;font-size:20px;" />
+                    </div>
+                </div>
+                <div class="bprestpass">
+                    <div class="inputbox bpinput resetbox">
+                        <img src="/Member/Images/passw.png" alt="新密码">
+                        <input type="password" id="txtBindMobilePassWord1" name="PassWord1" placeholder="请输入新密码" autocomplete="new-password">
+                        <span id="bindMobile_PassWord1Verify" style="color:red;font-size:20px;" />
+                    </div>
+                    <div class="inputbox bpinput resetbox" style="border-bottom:none;">
+                        <img src="/Member/Images/passw.png" alt="确认新密码">
+                        <input type="password" id="txtBindMobilePassWord2" name="PassWord2" placeholder="请确认新密码" autocomplete="new-password">
+                        <span id="bindMobile_PassWord2Verify" style="color:red;font-size:20px;" />
+                    </div>
+                </div>
+                <p id="bindMobile_errorInfo" style="color:red;text-align:center" />
+                <div class="btn_login inputbox">
+                    <input type="button" name="submit" value="确定" onclick="AJAX_BindMobile_Save()">
+                </div>
+
+            </form>
+        </div>
+        <div id="bindMobile3" class="bpcontent03 bpcontentbox" style="display:none;">
+            <div class="bpdiv">
+                <h3>成功绑定手机号</h3>
+                <p>现在您可以使用<span>用户完整手机号码</span>登录平台</p>
+            </div>
+            <div class="btnlogin loginAgain">
+                <a href="javascript:BindMobileLogin()">重新登录</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--忘记密码-->
+<div id="updatePwd" class="wrap_box" style="display:none;min-height:400px">
+    <div class="resetpass">
+        <div class="resettop">
+            <dl>
+                <dt id="updatePwd_tab"><span/><span /><span /></dt>
+                <dd id="updatePwd_tab_header">
+                    <span class="hover">验证微信</span>
+                    <span>设置新密码</span><span>
+                        完成更改
+                    </span>
+                </dd>
+            </dl>
+        </div>
+        <div id="updatePwd1" class="content01 contentbox">
+            <h3>验证微信</h3>
+            <div class="yz">
+                <div class="loginWeixinPicture">
+                    <img id="updatePwd_loading" src="/Member/Images/loading.gif" style="width:15px; height:15px;">
+                    <img id="updatePwd_qrcodeWX" alt="二维码" style="display:none">
+                </div>
+                <div id="updatePwd_qrcodeFailed" class="maskLogin">二维码获取失败<a onclick="RefreshUpdatePwdQrCode()"><img src="/Member/Images/update.gif" alt="">刷新</a></div>
+            </div>
+            <span id="updatePwd_qrcodeInfo" style="color:red;text-align:center; font-size:12px" />
+            <p>请使用注册的微信号扫一扫验证</p>
+        </div>
+        <div id="updatePwd2" class="content02 contentbox" style="display:none">
+            <h3>您绑定的手机号码：<span id="forgetPwd_customerMobile" /></h3>
+            <form id="form_UpdatePwd" name="form_UpdatePwd" class="formpassworld">
+                <input type="hidden" id="hddUpdatePwdOpenID" name="OpenID" />
+                <div class="resetpw1 inputbox resetbox">
+                    <img src="/Member/Images/passw.png" alt="密码">
+                    <input type="password" id="txtUpdatePwd1" name="PassWord1" placeholder="请输入新密码" autocomplete="new-password">
+                    <span id="updatePwd1Verify" style="color:red;font-size:20px;" />
+                </div>
+                <div class="resetpw2 inputbox resetbox">
+                    <img src="/Member/Images/passw.png" alt="密码">
+                    <input type="password" id="txtUpdatePwd2" name="PassWord2" placeholder="请确认新密码" autocomplete="new-password">
+                    <span id="updatePwd2Verify" style="color:red;font-size:20px;" />
+                </div>
+                <p id="updatePwd_errorInfo" style="color:red;text-align:center" />
+                <div class="btn_login inputbox">
+                    <input type="button" value="确定" onclick="AJAX_UpdatePwd_Save()">
+                </div>
+            </form>
+        </div>
+        <div id="updatePwd3" class="content03 contentbox" style="display:none">
+            <div class="resetdiv"><h3>成功设置新密码</h3></div>
+            <div class="btnlogin loginAgain">
+                <a href="javascript:UpdatePwdLogin()">重新登录</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(".inputchange input").focus(function (event) {
+        $(".inputchange").css("border", "1px #f0f0f0 solid");
+        $(this).parent().css("border", "1px #E9445A solid");
+        $("#login_mobileVerify").hide();
+        $("#login_pwdVerify").hide();
+        $(this).val("");
+    })
+
+    $(".inputchange input").blur(function () {
+        $(".inputchange").css("border", "1px #f0f0f0 solid");
+    })
+</script>
+
+<script src="/JS/VCode.js?v=1"></script>
+<script type="text/javascript">
+    //====登录开始
+
+    $(document).ready(function () {
+        var mobile = GetCookie("m");
+        var password = GetCookie("p");
+        if (mobile != "" && password != "") {
+            $("#login_chkSaveAccount").prop("checked", true);
+            $("#txtLoginMobile").val(mobile);
+            $("#txtLoginPassword").val(password);
+        }
+    });
+
+    //切换效果
+    $(".sn_login ul li").click(function (event) {
+        event.preventDefault();
+        $(".sn_login ul li a").removeClass("hover");
+        $(".changeLogin").removeClass("showCurrent");
+        $(this).children("a").addClass("hover");
+
+        var loginIndex = $(this).index();
+        if (loginIndex == 0) {
+            $.ajax({
+                url: "/Member/Login",
+                type: "get",
+                ShowLoading: false,
+                dataType: "text",
+                success: function (res) {
+                    $("#login").html(res);
+                }
+            });
+        }
+
+        $(".changeLogin").eq(loginIndex).addClass("showCurrent");
+    });
+
+    $("#txtLoginPassword").on("keypress", function () {
+        if (event.keyCode == 13) {
+            AJAX_Login_Save();
+        }
+    });
+
+    //登录
+    function AJAX_Login_Save() {
+        var mobile = $.trim($("#txtLoginMobile").val());
+        var password = $.trim($("#txtLoginPassword").val());
+
+        if (mobile == '') {
+            $("#login_mobileVerify").html("&#xe614;").addClass("inputNoIcon").css("display", "block");
+            $("#login_errorInfo").text("请输入手机号码！");
+            return false;
+        }
+
+        if (mobile.search(/^[1][3,4,5,6,7,8,9][0-9]{9}$/g)) {
+            $("#login_mobileVerify").html("&#xe614;").addClass("inputNoIcon").css("display", "block");
+            $("#login_errorInfo").text("请输入正确的手机号码！");
+            return false;
+        }
+
+        $("#login_mobileVerify").html("&#xe695;").addClass("inputYesIcon").css("display", "block");
+        $("#login_errorInfo").text("");
+
+        if (password == '') {
+            $("#login_pwdVerify").html("&#xe614;").addClass("inputNoIcon").css("display", "block");
+            $("#login_errorInfo").text("请输入密码！");
+            return false;
+        }
+
+        if (password.search(/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,}$/g)) {
+            $("#login_pwdVerify").html("&#xe614;").addClass("inputNoIcon").css("display", "block");
+            $("#login_errorInfo").text("请设置6-20位数字字母组合的密码！");
+            return false;
+        }
+
+        $("#login_pwdVerify").html("&#xe695;").addClass("inputYesIcon").css("display", "block");
+        $("#login_errorInfo").text("");
+
+        $.ajax({
+            url: "/Member/LoginForAccount/Save",
+            type: "post",
+            data: $("#form_Login").serializeArray(),
+            dataType: "json",
+            success: function (res) {
+                if (res.StatusCode == "Success") {
+                    if ($("#login_chkSaveAccount").is(":checked")) {
+                        SetCookie("m", mobile, 30);
+                        SetCookie("p", password, 30);
+                    }
+                    else {
+                        SetCookie("m", null, -1);
+                        SetCookie("p", null, -1);
+                    }
+
+                    location.href = "/Member/";
+                }
+                else {
+                    $("#login_errorInfo").text(res.ErrorInfo);
+                }
+            }
+        });
+    }
+
+    //忘记密码
+    function UpdatePwd() {
+        $("#login_Tab").hide();
+        $("#loginMobile").hide();
+        $("#updatePwd").show();
+        $("#updatePwd1").show();
+        $("#updatePwd3").hide();
+        clearInterval(loginTimer);
+        GetUpdatePwdQrCode();
+    }
+
+    //绑定手机
+    function BindMobile() {
+        $("#login_Tab").hide();
+        $("#loginMobile").hide();
+        $("#bindMobile").show();
+        $("#bindMobile1").show();
+        $("#bindMobile3").hide();
+        clearInterval(loginTimer);
+        GetBindMobileQrCode();
+        InitVCode("imgVerifyCode");
+    }
+
+    function GetCookie(name) {
+        if (document.cookie.length < 1) return "";
+
+        var reg = RegExp(name + '=([^;]+)');
+        var arr = document.cookie.match(reg);
+        if (arr) {
+            return arr[1];
+        }
+        else {
+            return "";
+        }
+    }
+
+    function SetCookie(name, value, day) {
+        var date = new Date();
+        date.setDate(date.getDate() + Number(day));
+        document.cookie = name + "=" + value + ";expires=" + date;
+    }
+
+    //====登录结束
+
+
+    //====立即绑定手机开始
+
+    var bindMobileTimer, bindMobileTicket;
+
+    //刷新二维码
+    function RefreshBindMobilenQrCode() {
+        GetBindMobileQrCode();
+    }
+
+    //获取二维码
+    function GetBindMobileQrCode() {
+        $.ajax({
+            url: "/Member/LoginForAccount/GetQRCode_WXBind",
+            type: "get",
+            ShowLoading: false,
+            dataType: "json",
+            success: function (res) {
+                if (res.StatusCode == "Success") {
+                    if (res.Ticket == null) {
+                        $("#bindMobile_qrcodeFailed").show();
+                    }
+                    else {
+                        $("#bindMobile_loading").hide();
+                        $("#bindMobile_qrcodeWX").show().attr("src", res.QrCode);
+                        bindMobileTicket = res.Ticket;
+                        $("#bindMobile_qrcodeFailed").hide();
+                        IntervalBindMobileQrStatus();
+                    }
+                }
+            }
+        });
+    }
+
+    //检查二维码状态
+    function IntervalBindMobileQrStatus() {
+        var num = 30;
+        bindMobileTimer = setInterval(function CheckBindMobileQrStatus() {
+            num--;
+
+            $.ajax({
+                url: "/Member/LoginForAccount/CheckQrStatus_WXBind?ticket=" + bindMobileTicket,
+                type: "get",
+                ShowLoading: false,
+                dataType: "json",
+                success: function (res) {
+                    if (res.StatusCode == "Success") {
+                        if (res.IsDisable == true) {
+                            clearInterval(bindMobileTimer);
+                            $("#bindMobile_qrcodeInfo").text("您的账号已被禁用！");
+                            return;
+                        }
+
+                        if (res.QrStatus == true) {
+                            clearInterval(bindMobileTimer);
+                            clearTimeout(SMSVCodeNumber_timer);
+                            $("#bindMobile1").hide();
+                            $("#bindMobile2").show();
+                            $(".resettop dl").addClass("current_tab02");
+                            $("#hddBindMobileOpenID").val(res.OD);
+                            return;
+                        }
+                    }
+                }
+            });
+
+            if (num == 0) {
+                clearInterval(bindMobileTimer);
+                layer.closeAll();
+            }
+
+        }, 1000);
+    }
+
+    //获取短信验证码
+    function GetBindMobileSMSVCode() {
+        var mobile = $.trim($("#txtBindMobile").val());
+
+        if (mobile == '') {
+            $("#bindMobile_Verify").text("×");
+            $("#bindMobile_errorInfo").text("请输入手机号码！");
+            return false;
+        }
+
+        if (mobile.search(/^[1][3,4,5,6,7,8,9][0-9]{9}$/g)) {
+            $("#bindMobile_Verify").text("×");
+            $("#bindMobile_errorInfo").text("请输入正确的手机号码！");
+            return false;
+        }
+
+        $("#bindMobile_Verify").text("√");
+        $("#bindMobile_errorInfo").text("");
+
+        if ($.trim($("#txtBindMobileVerifyCode").val()) == '') {
+            $("#bindMobile_CodeVerify").text("×");
+            $("#bindMobile_errorInfo").text("请输入图形验证码！");
+            return false;
+        }
+
+        $("#bindMobile_CodeVerify").text("√");
+        $("#bindMobile_errorInfo").text("");
+
+        $.ajax({
+            url: "/Member/LoginForAccount/SendSMSVCode_BindMobile",
+            type: "post",
+            data: $("#form_BindMobile").serializeArray(),
+            dataType: "json",
+            success: function (res) {
+                if (res.StatusCode == "Success") {
+                    $("#bindMobile_errorInfo").html("短信验证码已发送到您的手机！");
+                    btnSendSMSVCode_BindMobile();
+                } else {
+                    $("#bindMobile_errorInfo").text(res.ErrorInfo);
+                    //刷新验证码图片
+                    InitVCode("imgVerifyCode");
+                }
+            }
+        });
+    }
+
+    var SMSVCodeNumber_BindMobile = 60;//秒数
+    var SMSVCodeNumber_timer;
+    //发送短信倒计时
+    function btnSendSMSVCode_BindMobile() {
+        if (SMSVCodeNumber_BindMobile == 0) {
+            $("#btnSendSMSVCode_BindMobile").text("重新发送验证码").removeAttr("disabled");
+            SMSVCodeNumber_BindMobile = 60;
+            return;
+        } else {
+            $("#btnSendSMSVCode_BindMobile").text("重新获取(" + SMSVCodeNumber_BindMobile + ")").attr("disabled", "true");
+            SMSVCodeNumber_BindMobile--;
+        }
+
+        SMSVCodeNumber_timer = setTimeout(function () { btnSendSMSVCode_BindMobile() }, 1000);
+    }
+
+    $("#txtBindMobilePassWord2").on("keypress", function () {
+        if (event.keyCode == 13) {
+            AJAX_BindMobile_Save();
+        }
+    });
+
+    //绑定手机
+    function AJAX_BindMobile_Save() {
+        var mobile = $.trim($("#txtBindMobile").val());
+        var password1 = $.trim($("#txtBindMobilePassWord1").val());
+        var password2 = $.trim($("#txtBindMobilePassWord2").val());
+
+        if (mobile == '') {
+            $("#bindMobile_Verify").text("×");
+            $("#bindMobile_errorInfo").text("请输入手机号码！");
+            return false;
+        }
+
+        if (mobile.search(/^[1][3,4,5,6,7,8,9][0-9]{9}$/g)) {
+            $("#bindMobile_Verify").text("×");
+            $("#bindMobile_errorInfo").text("请输入正确的手机号码！");
+            return false;
+        }
+
+        $("#bindMobile_Verify").text("√");
+        $("#bindMobile_errorInfo").text("");
+
+        if ($.trim($("#txtBindMobileVerifyCode").val()) == '') {
+            $("#bindMobile_CodeVerify").text("×");
+            $("#bindMobile_errorInfo").text("请输入图形验证码！");
+            return false;
+        }
+
+        $("#bindMobile_CodeVerify").text("√");
+        $("#bindMobile_errorInfo").text("");
+
+        if ($.trim($("#txtBindMobileSMSVCode").val()) == '') {
+            $("#bindMobile_SMSVCodeVerify").text("×");
+            $("#bindMobile_errorInfo").text("请输入短信验证码！");
+            return false;
+        }
+
+        $("#bindMobile_SMSVCodeVerify").text("√");
+        $("#bindMobile_errorInfo").text("");
+
+        if (password1 == '') {
+            $("#bindMobile_PassWord1Verify").text("×");
+            $("#bindMobile_errorInfo").text("请输入新密码！");
+            return false;
+        }
+
+        if (password1.search(/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,}$/g)) {
+            $("#bindMobile_PassWord1Verify").text("×");
+            $("#bindMobile_errorInfo").text("请设置6-20位数字字母组合的密码！");
+            return false;
+        }
+
+        $("#bindMobile_PassWord1Verify").text("√");
+        $("#bindMobile_errorInfo").text("");
+
+        if (password2 == '') {
+            $("#bindMobile_PassWord2Verify").text("×");
+            $("#bindMobile_errorInfo").text("请输入确认密码！");
+            return false;
+        }
+
+        if (password1 != password2) {
+            $("#bindMobile_PassWord2Verify").text("×");
+            $("#bindMobile_errorInfo").text("前后密码不一致！");
+            return false;
+        }
+
+        $("#bindMobile_PassWord2Verify").text("√");
+        $("#bindMobile_errorInfo").text("");
+
+        $.ajax({
+            url: "/Member/LoginForAccount/WXBind_Save",
+            type: "post",
+            data: $("#form_BindMobile").serializeArray(),
+            dataType: "json",
+            success: function (res) {
+                if (res.StatusCode == "Success") {
+                    $("#bindMobile2").hide();
+                    $("#bindMobile3").show();
+                    $(".resettop dl").addClass("current_tab03");
+                }
+                else {
+                    $("#bindMobile_errorInfo").text(res.ErrorInfo);
+                    //刷新验证码图片
+                    InitVCode("imgVerifyCode");
+                }
+            }
+        });
+    }
+
+    //重新登录
+    function BindMobileLogin() {
+        $("#login_Tab").show();
+        $("#loginMobile").show();
+        $("#bindMobile").hide();
+        //$("#bindMobile1").show();
+        //$("#bindMobile3").show();
+        $(".resettop dl").removeClass("current_tab02 current_tab03");
+    }
+
+    //====立即绑定手机结束
+
+    //====忘记密码开始
+
+    var updatePwdTimer, updatePwdTicket;
+
+    //刷新二维码
+    function RefreshUpdatePwdQrCode() {
+        GetUpdatePwdQrCode();
+    }
+
+    //获取二维码
+    function GetUpdatePwdQrCode() {
+        $.ajax({
+            url: "/Member/LoginForAccount/GetQRCode_ChangePassword",
+            type: "get",
+            ShowLoading: false,
+            dataType: "json",
+            success: function (res) {
+                if (res.StatusCode == "Success") {
+                    if (res.Ticket == null) {
+                        $("#updatePwd_qrcodeFailed").show();
+                    }
+                    else {
+                        $("#updatePwd_loading").hide();
+                        $("#updatePwd_qrcodeWX").show().attr("src", res.QrCode);
+                        $("#updatePwd_qrcodeWX").attr("src", res.QrCode);
+                        updatePwdTicket = res.Ticket;
+                        $("#updatePwd_qrcodeFailed").hide();
+                        IntervalUpdatePwdQrStatus();
+                    }
+                }
+            }
+        });
+    }
+
+    //检查二维码状态
+    function IntervalUpdatePwdQrStatus() {
+        var num = 30;
+        updatePwdTimer = setInterval(function CheckUpdatePwdQrStatus() {
+            num--;
+
+            $.ajax({
+                url: "/Member/LoginForAccount/CheckQrStatus_ChangePassword?ticket=" + updatePwdTicket,
+                type: "get",
+                ShowLoading: false,
+                dataType: "json",
+                success: function (res) {
+                    if (res.StatusCode == "Success") {
+                        if (res.IsDisable == true) {
+                            clearInterval(updatePwdTimer);
+                            $("#updatePwd_qrcodeInfo").text("您的账号已被禁用！");
+                            return;
+                        } 
+
+                        if (res.BindMobile == false) {
+                            clearInterval(updatePwdTimer);
+                            $("#updatePwd_qrcodeInfo").text("您尚未绑定手机号，请先进行绑定！");
+                            //layer.alert("您尚未绑定手机号，请先进行绑定！", { skin: "KxLayer", closeBtn: 0 }, function (index) {
+                            //    $("#bindMobile").show();
+                            //    $("#updatePwd").hide();
+                            //    GetBindMobileQrCode();
+                            //    layer.close(index);
+                            //});
+                            return;
+                        }
+
+                        if (res.QrStatus == true) {
+                            clearInterval(updatePwdTimer);
+                            $("#updatePwd1").hide();
+                            $("#updatePwd2").show();
+                            $(".resettop dl").addClass("current_tab02");
+                            $("#hddUpdatePwdOpenID").val(res.OD);
+                            $("#updatePwd_customerMobile").text(res.mobile);
+                            return;
+                        }
+                    }
+                }
+            });
+
+            if (num == 0) {
+                clearInterval(updatePwdTimer);
+                layer.closeAll();
+            }
+
+        }, 1000);
+    }
+
+    $("#txtUpdatePwd2").on("keypress", function () {
+        if (event.keyCode == 13) {
+            AJAX_UpdatePwd_Save();
+        }
+    });
+
+    //忘记密码
+    function AJAX_UpdatePwd_Save() {
+        var password1 = $.trim($("#txtUpdatePwd1").val());
+        var password2 = $.trim($("#txtUpdatePwd2").val());
+
+        if (password1 == '') {
+            $("#updatePwd1Verify").text("×");
+            $("#updatePwd_errorInfo").text("请输入新密码！");
+            return false;
+        }
+
+        if (password1.search(/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,}$/g)) {
+            $("#updatePwd1Verify").text("×");
+            $("#updatePwd_errorInfo").text("请设置6-20位数字字母组合的密码！");
+            return false;
+        }
+
+        $("#updatePwd1Verify").text("√");
+        $("#updatePwd_errorInfo").text("");
+
+        if (password2 == '') {
+            $("#updatePwd2Verify").text("×");
+            $("#updatePwd_errorInfo").text("请输入确认密码！");
+            return false;
+        }
+
+        if (password1 != password2) {
+            $("#updatePwd2Verify").text("×");
+            $("#updatePwd_errorInfo").text("前后密码不一致！");
+            return false;
+        }
+
+        $("#updatePwd2Verify").text("√");
+        $("#updatePwd_errorInfo").text("");
+
+        $.ajax({
+            url: "/Member/LoginForAccount/ChangePassword_Save",
+            type: "post",
+            data: $("#form_UpdatePwd").serializeArray(),
+            dataType: "json",
+            success: function (res) {
+                if (res.StatusCode == "Success") {
+                    $("#updatePwd2").hide();
+                    $("#updatePwd3").show();
+                    $(".resettop dl").addClass("current_tab03");
+                }
+                else {
+                    $("#updatePwd_errorInfo").text(res.ErrorInfo);
+                }
+            }
+        });
+    }
+
+    //重新登录
+    function UpdatePwdLogin() {
+        $("#login_Tab").show();
+        $("#loginMobile").show();
+        $("#updatePwd").hide();
+        //$("#updatePwd1").show();
+        //$("#updatePwd3").show();
+        $(".resettop dl").removeClass("current_tab02 current_tab03");
+
+    }
+
+    //====忘记密码结束
+</script>

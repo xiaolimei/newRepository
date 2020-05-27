@@ -1,0 +1,102 @@
+/*菜单外框样式*/
+#JimmyMenu {
+	font-size: 14px;
+}
+
+/*分割条样式*/
+#JimmyMenu .split {
+	height: 1px;
+	margin: 10px 15px;
+	background-color: #383838;
+}
+
+/*一级菜单默认样式*/
+#JimmyMenu .MainMenuItem {
+	display: block;
+	height: 48px;
+	line-height: 48px;
+	font-size: 14px;
+	color: #939393;
+	cursor: pointer;
+}
+
+#JimmyMenu .MainMenuItem cite {
+	display: inline-block;
+	width: 2px;
+	height: 0px;
+	background: #E9445A;
+	vertical-align: middle;
+}
+
+#JimmyMenu .MainMenuItem .icon {
+	display: inline-block;
+	width: 27px;
+	line-height: 48px;
+	margin-left: 22px;
+	font-size: 16px;
+	vertical-align: middle;
+}
+
+#JimmyMenu .MainMenuItem .title {
+	display: inline-block;
+	width: 120px;
+	line-height: 48px;
+	vertical-align: middle;
+}
+
+#JimmyMenu .MainMenuItem .arrow {
+	display: inline-block;
+	line-height: 48px;
+	vertical-align: middle;
+}
+
+/*一级菜单悬停样式*/
+#JimmyMenu .MainMenuItem:hover {
+	color: #fff;
+	background: #2d2d2d;
+}
+
+#JimmyMenu .MainMenuItem:hover cite {
+	height: 48px;
+}
+
+/*一级菜单展开样式 箭头方向切换*/
+#JimmyMenu .MainMenuExpend .arrow {
+	transform: rotate(180deg);
+	transition: transform 0.1s linear;
+}
+
+/*一级菜单选中样式*/
+#JimmyMenu .MainMenuActived {
+	color: #fff;
+	background: #2d2d2d;
+}
+
+#JimmyMenu .MainMenuActived cite {
+	height: 48px;
+}
+
+/*二级菜单外框样式*/
+#JimmyMenu .SubMenu {
+	display: none;
+}
+
+/*二级菜单默认样式*/
+#JimmyMenu .SubMenu .SubMenuItem {
+	display: block;
+	height: 44px;
+	line-height: 44px;
+	padding-left: 46px;
+	font-size: 13px;
+	color: #939393;
+}
+
+/*二级菜单悬停样式*/
+#JimmyMenu .SubMenu .SubMenuItem:hover {
+	color: #E9445A;
+}
+
+/*二级菜单选中样式*/
+#JimmyMenu .SubMenu .SubMenuActived {
+	color: #E9445A;
+}

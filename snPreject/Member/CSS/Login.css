@@ -1,0 +1,531 @@
+﻿body {
+    font-family: "Microsoft YaHei";
+    color: #333;
+    margin: 0 auto;
+    padding: 0;
+}
+
+ul, li, dl, dt, dd, p, ol, h1, h2, h3, h4, h5, input {
+    margin: 0;
+    padding: 0;
+}
+
+    ul li, ol li, li {
+        list-style: none;
+    }
+
+a {
+    text-decoration: none;
+    color: #333;
+    font-family: "Microsoft YaHei";
+}
+
+img {
+    border: none;
+}
+ 
+.sn_login, .resetpass, .bindphonediv {
+    font-size: 16px;
+    overflow: hidden;
+ 
+}
+
+/*二维码失效*/
+.maskLogin {
+    font-size: 14px;
+    background: rgba(255,255,255,.9);
+    width: 150px;
+    height: 150px;
+    padding-top: 30px;
+    line-height: 1.6;
+    box-sizing: border-box;
+    margin: 0 auto;
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    display: none;
+}
+
+    .maskLogin a {
+        cursor: pointer;
+        display: block;
+        width: 60px;
+        height: 28px;
+        line-height: 28px;
+        border-radius: 4px;
+        background: rgba(233,68,90,1);
+        color: #fff;
+        margin: 25px auto 0;
+    }
+
+        .maskLogin a img {
+            vertical-align: middle;
+            margin-right: 6px;
+        }
+
+/*input公共样式*/
+.inputbox {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    border: 1px #f0f0f0 solid;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    height: 36px;
+    overflow:hidden;
+}
+
+    .inputbox > img {
+        vertical-align: middle;
+        margin: 0 8px;
+    }
+
+    .inputbox input {
+        border: none;
+        caret-color: red;
+        color: #aaa;
+        width: 100%;
+    }
+
+        .inputbox input:focus {
+            outline: none;
+        }
+
+input::-webkit-input-placeholder {
+    color: #ddd;
+}
+
+input::-moz-placeholder {
+    color: #ddd;
+}
+
+input:-ms-input-placeholder {
+    color: #ddd;
+}
+
+/*resetpassworld and bindphone顶部切换效果*/
+
+.resettop {
+    height: 90px;
+    background-color: #fafafa;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+    .resettop dl dt {
+        cursor: pointer;
+        width: 250px;
+        height: 30px;
+        background: url("../images/pass_01.jpg") no-repeat center center;
+        margin: 0 auto 7px;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .resettop dl dd {
+        width: 270px;
+        display: flex; 
+        justify-content: space-between;
+        align-items: center;
+        font-size: 12px;
+        cursor: pointer
+    }
+
+  .resettop dl dd span:nth-child(1) {
+            color: #E9445A;
+        }
+
+    .resettop dl.current_tab02 dt {
+        background-image: url("../images/pass_02.jpg");
+    }
+
+    .resettop dl.current_tab03 dt {
+        background-image: url("../images/pass_03.jpg");
+    }
+
+    .resettop dl.current_tab02 dd span:nth-child(2) {
+        color: #E9445A;
+    }
+
+    .resettop dl.current_tab03 dd span:nth-child(3) {
+        color: #E9445A;
+    }
+
+  
+
+/*密码验证01*/
+.content01 {
+    text-align: center;
+    min-height:310px;
+}
+
+    .content01 h3 {
+        padding: 20px 0 8px;
+        font-size: 14px;
+    }
+
+    .content01 p {
+        color: #666;
+        margin-top: 15px;
+        font-size: 14px;
+    }
+
+.yz {
+    position: relative;
+    width:200px;
+    height:200px;
+    margin:0 auto;
+}
+/*二维码图片大小*/
+.loginWeixinPicture{
+    width:200px;
+    height:200px;
+    margin:0 auto;  
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+.loginWeixinPicture img {
+    width: 200px;
+    height: 200px;
+    display:inline-block;
+}
+/*绑定手机样式*/
+.bpform {
+    width: 320px;
+    margin: 0 auto;
+}
+ 
+.bpverification {
+    height: 120px;
+    margin: 0 auto;
+    border-radius: 4px;
+    padding: 0 10px;
+    box-sizing: border-box;
+    border: 1px #ddd solid;
+}
+
+.bpinput {
+    border: none;
+    border-bottom: 1px #ddd solid;
+    margin-bottom: 0;
+    height: 39px;
+}
+
+    .bpinput input {
+        caret-color: auto;
+    }
+
+    .bpinput i {
+        margin-right: 0;
+    }
+
+.graph_yzm {
+    width: 130px;
+    height: 29px;
+    display: inline-block;
+}
+
+.get_yzm {
+    display: inline-block;
+    width: 130px;
+    height: 30px;
+    border-radius: 4px;
+    background: #E9445A;
+    color: #fff;
+    text-align: center;
+    font-size: 12px;
+    cursor: pointer;
+    -webkit-appearance: none;
+    border: 1px #E9445A solid;
+}
+
+.bprestpass {
+    height: 80px;
+    margin-top: 21px;
+    border: 1px #ddd solid;
+    border-radius: 4px;
+    padding: 0 10px;
+}
+
+.bpform > p {
+    text-align: center;
+    padding: 18px 0 35px 0;
+    color: #E9445A;
+    font-size: 12px;
+}
+.bpcontent02{
+    padding-top:30px;
+    min-height:398px;
+    box-sizing:border-box;
+
+}
+.bpcontent03 {
+    width: 320px;
+    margin: 0 auto;
+    min-height: 310px;
+}
+
+.bpdiv {
+    text-align: center;
+    height: 190px;
+    overflow: hidden;
+}
+
+    .bpdiv h3 {
+        font-size: 16px;
+        margin: 74px 0 36px 0;
+    }
+
+    .bpdiv p {
+        font-size: 12px;
+    }
+
+        .bpdiv p span {
+            color: #E9445A;
+        }
+
+
+/*重置密码 02*/
+ 
+
+    .content02 h3 {
+        margin: 28px 0;
+        text-align: center;
+        font-size: 14px;
+    }
+
+        .content02 h3 span {
+            color: #E9445A;
+        }
+
+.formpassworld {
+    width: 320px;
+    margin: 0 auto;
+}
+
+    .formpassworld > p {
+        text-align: center;
+        padding:18px 0 35px 0;
+        color: #E9445A;
+        font-size: 12px;
+    }
+ 
+.resetdiv {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 189px;
+}
+
+    .resetdiv h3 {
+        font-size: 16px;
+    }
+
+.resetbox input {
+    caret-color: auto;
+}
+.resetpw2{
+    margin-bottom:0;
+}
+/*输入框后面的yes,no的图片*/
+.resetbox {
+    position: relative
+}
+
+    .resetbox i {
+        width: 19px;
+        height: 16px;
+        margin-right: 11px;
+    }
+
+        .resetbox i.error {
+            background: url("../images/checkno.jpg") no-repeat center;
+        }
+
+        .resetbox i.ok {
+            background: url("../images/checkyes.jpg") no-repeat center;
+        }
+
+
+/*login_button登录按钮样式*/
+.btn_login input {
+    height: 36px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #E9445A;
+    color:#fff;
+    line-height:36px;
+}
+    .btn_login input:hover {
+        background-color:rgba(233,68,90,.9);
+    }
+
+    .btnlogin, .btnreset, .btnbindphone {
+        background-color: #ddd;
+        height: 36px;
+        border-radius: 4px;
+        border: 1px #f0f0f0 solid;
+    }
+
+    .btnlogin a, .btnreset a, .btnbindphone a {
+        display: block;
+        color: #fff;
+        text-align: center;
+        line-height: 36px;
+    }
+
+.loginAgain {
+    width: 320px;
+    background-color: #E9445A;
+    margin: 0 auto;
+}
+    .loginAgain:hover {
+        background: rgba(233,68,90,.9);
+    }
+    /*login*/
+    .sn_login ul {
+        margin: 36px 0 29px;
+        display: flex;
+        justify-content: center;
+    }
+
+    .sn_login ul li:first-child {
+        margin-right: 40px;
+    }
+
+    .sn_login ul li a {
+        cursor: pointer;
+        font-weight: 400;
+        color: rgba(153,153,153,1);
+        padding-bottom: 5px;
+    }
+
+        .sn_login ul li a.hover {
+            border-bottom: 2px rgba(233,68,90,1) solid;
+            font-weight: bold;
+            color: #333;
+        }
+
+.ewmLogin {
+    text-align: center;
+    position: relative;
+    overflow:hidden;
+    box-sizing:border-box;
+}
+    .ewmLogin>img{ width:200px; height:200px; display:block; margin:0 auto;}
+
+    .buttomLogin {
+        text-align: center;
+        margin-top: 33px;
+        font-size: 14px;
+    }
+
+    .buttomLogin img {
+        margin: 0 5px;
+    }
+
+.changeLogin {
+    display: none;
+}
+
+.showCurrent {
+    display: block;
+}
+
+/*form*/
+.formlogin {
+    width: 340px;
+    margin: 0 auto;
+    font-size: 12px;
+}
+
+.checkinput {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #aaa;
+    position: relative;
+    margin-bottom: 40px;
+}
+ 
+    .checkinput p input {
+        vertical-align: middle;
+        -webkit-appearance: none;
+        width: 14px;
+        height: 14px;
+        border: 1px #ddd solid;
+        margin-right: 7px;
+        cursor:pointer;
+    }
+
+        .checkinput p input[type='checkbox']:checked {
+            background: url("../images/check.png") no-repeat center center;
+            background-size: 12px 12px;
+        }
+
+.passcolor {
+    color: #FF9A40;
+}
+    .passcolor:hover{
+        text-decoration:underline;
+    }
+    /*buttom*/
+    .buttom_p {
+        margin-top: 30px;
+        font-size: 14px;
+        text-align: center;
+        color: #aaa;
+    }
+
+    .buttom_p a {
+        color: #e9445a;
+        
+    }
+        .buttom_p a:hover {
+   
+            text-decoration: underline;
+        }
+
+/*登录框的样式覆盖*/
+
+body .layer_login_myskin{
+    border-radius:5px;
+}
+    body .layer_login_myskin .layui-layer-ico {
+        background: url("../images/closeicon.png") no-repeat center center;
+    }
+    body .layer_login_myskin .layui-layer-setwin .layui-layer-close1 {
+        background-position: center;
+    }
+
+body .layer_login_myskin .layui-layer-setwin {
+     right:4px;
+     top:4px;
+}
+    body .layer_login_myskin .layui-layer-setwin a {
+        width: 14px;
+        height: 14px;
+        margin-left: 0;
+        font-size: 0;
+        
+    }
+    body .layer_login_myskin .layui-layer-setwin .layui-layer-close2:hover {
+        background: url(../images/closeicon.png) no-repeat center center;
+    }
+    body .layer_login_myskin .layui-layer-content {
+        height: auto !important;
+    }
+/*input里面的正确错误按钮样式*/
+.inputNoIcon {
+    font-size: 15px;
+    color: #E9445A;
+    margin-right: 10px;
+}
+.inputYesIcon {
+    font-size: 15px;
+    color: #52C223;
+    margin-right: 10px;
+}

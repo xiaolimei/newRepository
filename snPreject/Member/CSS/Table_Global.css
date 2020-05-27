@@ -1,0 +1,22 @@
+﻿/*Layui全局样式重写 table行高，填充，字体大小，表头粗体，取消单元格中图片最小宽度限制 */
+.layui-table-view .layui-table th{color:#09348d; font-weight:bold;}
+.layui-table-cell{
+    font-size: 11px!important;    
+}
+.layui-table td, .layui-table th {
+   font-size: 11px!important;    
+}
+.layui-table th .layui-table-cell{
+    height: 36px;
+    line-height:36px;
+    padding: 0 3px;
+}
+.layui-table td .layui-table-cell{
+	height: auto;
+    line-height:20px;
+    padding: 6px 3px;
+    overflow: visible;
+    text-overflow: inherit;
+    white-space: normal;
+    word-wrap: break-word;
+}

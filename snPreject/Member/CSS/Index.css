@@ -1,0 +1,32 @@
+﻿@-webkit-keyframes am-horizontal-roll_show {
+    0% {
+        opacity: 0;
+        -webkit-transform: translateX(2000px);
+        transform: translateX(2000px)
+    }
+    100% {
+        opacity: 1;
+        -webkit-transform: translateX(0);
+        transform: translateX(0)
+    }
+}
+
+@keyframes am-horizontal-roll_show {
+    0% {
+        opacity: 0;
+        -webkit-transform: translateX(400px);
+        -ms-transform: translateX(400px);
+        transform: translateX(400px)
+    }
+    100% {
+        opacity: 1;
+        -webkit-transform: translateX(0);
+        -ms-transform: translateX(0);
+        transform: translateX(0)
+    }
+}
+
+.layer-anim-07 {
+    -webkit-animation: am-horizontal-roll_show .3s ease-out;
+    animation: am-horizontal-roll_show .3s ease-out;
+}

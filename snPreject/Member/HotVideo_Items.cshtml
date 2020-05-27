@@ -1,0 +1,86 @@
+﻿@{
+    Layout = null;
+}
+@using VORM.Model;
+@model List<V_Video>
+
+@if (Model != null && Model.Count > 0)
+{
+    List<string> hotWords;
+    foreach (var item in Model)
+    {
+        string snIndexClass = "";
+        if (item.SNIndex >= 90)
+        {
+            snIndexClass = "firstVideo";
+        }
+        else if (item.SNIndex < 90 && item.SNIndex >= 70)
+        {
+            snIndexClass = "secondVideo";
+        }
+        else if (item.SNIndex < 70 && item.SNIndex >= 50)
+        {
+            snIndexClass = "thirdVideo";
+        }
+        <tr class="@snIndexClass">
+            <td style="min-width:173px;">
+                <i class="iconfont hotIcon">&#xe638;</i>
+                <span>@item.SNIndex</span>
+            </td>
+            <td style="min-width:930px;">
+                <div class="tableVideo">
+                    <a class="videoImg" href="javascript:;">
+                        <img src="@item.Image">
+                    </a>
+                    <div class="videoInfo">
+                        <span title="@item.Title">
+                            @item.Title
+                            @if (item.IsSaleAttr == 1)
+                            {
+                                <img style=" width: 16px; height: 16px;  vertical-align: middle;" src="./Images/cart.png" alt="购物车">
+                            }
+                        </span>
+                        <div class="condition" style=" margin-top: 0 !important;">
+                            <div class="condition-name">视频热词：</div>
+                            <div class="condition-list">
+                                @{
+                                    hotWords = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<string, int>>(item.HotWord)?.Keys.ToList();
+                                    if (hotWords != null)
+                                    {
+                                        foreach (var hotWord in hotWords)
+                                        {
+                                            <span>@hotWord</span>
+                                        }
+                                    }
+                                }
+                            </div>
+                        </div>
+                        <div class="videoTxt">
+                            <span>视频时长：@ViewHelper.ShowFormatSeconds(item.Duration)</span>
+                            @if (item.SaleNum > 0)
+                            {
+                                <span style="margin-left: 70px;">关联商品(@item.SaleNum)：<span style="color:#F3B74C" class="limitWords">@item.SaleFirstTitle</span></span>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </td>
+            <td style="min-width:219px;">
+                <p>@item.NickName</p>
+                <p>@ViewHelper.ShowTimeAgo(item.PublishTime)</p>
+            </td>
+            <td style="min-width:90px;">@ViewHelper.ShowUnitNum(item.PraiseNum)</td>
+            <td style="min-width:90px;">@ViewHelper.ShowUnitNum(item.CommentNum)</td>
+            <td style="min-width:90px;">@ViewHelper.ShowUnitNum(item.ShareNum)</td>
+            <td style="min-width:97px;">
+                <div class="operation">
+                    <span class="heatAnalysis heatIcon" onclick="hotVideoDetail(this)" data-id="@item.ID" data-dyid="@item.DYVideoID" tooltip="热度分析"><b></b><i class="iconfont">&#xe606;</i></span>
+                    <div onclick="test()">
+                        <span class="heatAnalysis collection" data-id="@item.ID" tooltip="收藏"><b></b><i class="iconfont">&#xe630;</i></span>
+                        <span class="heatAnalysis collection_Defaukt collection_Defaukt_hide" data-id="@item.ID" tooltip="已收藏"><i class="iconfont">&#xe774;</i></span>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    }
+}

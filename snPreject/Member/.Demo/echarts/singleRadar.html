@@ -1,0 +1,28 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>雷达图</title>
+    <script src="../../../Scripts/echarts.min.js"></script>
+    <script src="../../../Scripts/extents/snchart.js"></script>
+</head>
+<body>
+    <div id="main" style="width: 600px;height:400px;"></div>
+    <script>
+        var titleText = '视频 - 雷达图';
+        var radarIndicator = [
+            { name: '评论', max: 300 },
+            { name: '点赞', max: 250 },
+            { name: '转发', max: 300 }
+        ];
+        var radarSplitNumber = 3;
+        var seriesData = [
+            {
+                value: [200, 180, 150],
+            }
+        ];
+        snchart.singleRadar('main', titleText, radarIndicator, radarSplitNumber, seriesData);
+
+    </script>
+</body>
+</html>

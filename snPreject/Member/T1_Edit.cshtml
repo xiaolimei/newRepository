@@ -1,0 +1,44 @@
+﻿@{
+    Layout = null;
+}
+<form id="form_T1_Edit" name="form_T1_Edit" method="post" action="" class="layui-form">
+    <input type="hidden" name="hddID" id="hddID" value="@(ViewBag.Model.ID)" />
+    <table width="500" border="0" cellpadding="5" cellspacing="0" class="FormTable">
+
+        <tr>
+
+            <th width="120" class="start">标题：</th>
+            <td><input type="text" style="width:390px;" id="txtTitle" name="txtTitle" required requiredmessage="广告标题不能为空！" autocomplete="off" class="layui-input" value="@(ViewBag.Model.Title)"></td>
+        </tr>
+        <tr>
+            <th width="120">内容：</th>
+            <td><input type="text" style="width:390px;" id="txtContent" name="txtContent" autocomplete="off" class="layui-input" value="@(ViewBag.Model.Content)"></td>
+        </tr>
+    </table>
+</form>
+<script type="text/javascript">
+
+    layui.form.render();
+    $("#form_T1_Edit").InitValidator();
+
+    //保存
+    function AJAX_T1_Edit_Save() {
+        if (!$("#form_T1_Edit").IsValid()) {
+            layer.msg('内容填写不完整或有错误', { time: 2000 });
+            return false;
+        }
+
+        $.ajax({
+            url: "T1_Edit/Save",
+            type: "post",
+            data: $("#form_T1_Edit").serializeArray(),
+            dataType: "json",
+            success: function (res) {
+                if (res.StatusCode == "Success") {
+                    layui.table.reload('grid1');
+                    layer.msg('保存成功', { time: 800 });
+                }
+            }
+        });
+    }
+</script>

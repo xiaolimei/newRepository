@@ -1,0 +1,161 @@
+﻿@{
+    Layout = null;
+}
+<!-- 导航区 -->
+<div class="layui-card" style="width:100%!important;height:36px;line-height:36px;">
+    <span class="layui-breadcrumb" lay-separator="/" style="padding-left:15px;">
+        <a href="#StartPage">主页</a>
+        <a><cite>内容管理</cite></a>
+        <a><cite>T1管理</cite></a>
+    </span>
+</div>
+
+<div class="layui-card" style="margin:15px;">
+
+    <!-- 搜索区 -->
+    <div class="layui-card-body" style="border-bottom: 1px solid #f6f6f6;">
+        <form id="form_Search" name="form_Search" method="post" action="" class="layui-form">
+            <div class="GlobalSearchFrom">
+                <span id="btnAdd" class="layui-btn layui-btn-normal"><i class="layui-icon layui-icon-add-1"></i>添加</span>
+                <span id="btnDelAll" class="layui-btn layui-btn-normal"><i class="layui-icon layui-icon-delete"></i>批量删除</span>
+                <span class="split"></span>
+                <p>关键字：</p>
+                <span><input type="text" name="txtKeyWord" autocomplete="off" value="" class="layui-input" style="width: 142px"></span>
+                <input type="hidden" name="lblCategoryID" autocomplete="off" value="0" />
+                <input type="hidden" name="selectPraiseRange" autocomplete="off" value="0" />
+                <input type="hidden" name="selectDurationRange" autocomplete="off" value="0" />
+                <input type="hidden" name="chkIsSaleAttr" autocomplete="off" value="0" />
+                <input type="hidden" name="chkIsComponentAttr" autocomplete="off" value="0" />
+                <input type="hidden" name="selectVisitorType_Sex" autocomplete="off" value="0" />
+                <input type="hidden" name="selectVisitorType_Age" autocomplete="off" value="0" />
+                <input type="hidden" name="selectVisitorType_Province" autocomplete="off" value="0" />
+                <input type="hidden" name="selectVisitorType_City" autocomplete="off" value="0" />
+                <span id="btnSearch" class="layui-btn layui-btn-normal"><i class="layui-icon layui-icon-search"></i> 搜索</span>
+            </div>
+        </form>
+    </div>
+
+    <!-- 表格区 -->
+    <div class="layui-card-body">
+        <table id="grid1"></table>
+    </div>
+
+</div>
+
+<script type="text/javascript">
+;!function(){
+
+	var table = layui.table;
+	table.render({
+		elem: '#grid1',
+        url: "Video/GridData",
+        //url: "T1/GridData",
+		where: GetFormJSON("form_Search"),
+		page:{groups:28},
+		limit:20,
+		done: function(res, curr, count){
+			if($("#SNDataX_APPContent").width()<$("div[lay-id='grid1'] .layui-table").width()){
+				$("#SNDataX_APPContent").width($("div[lay-id='grid1'] .layui-table").width()+61);
+			}
+		},
+		cols: [[
+			{type: 'checkbox'},
+			{ field: 'ID', title: 'ID',  width: 60 },
+			{ field: 'Title', title: '广告标题' },
+			{ title: '操作', width: 90, align: 'center',
+                templet: '<div><a class="layui-btn layui-btn-normal layui-btn-xs" onclick="AJAX_Dialog_T1_Edit({{d.ID}})">修改</a><a class="layui-btn layui-btn-danger layui-btn-xs" onclick="AJAX_Del({{d.ID}})">删除</a></div>'
+			}
+		]]
+	})
+
+}();
+layui.form.render();
+
+
+//搜索
+$("#btnSearch").on("click", function(){
+	layui.table.reload('grid1', {where:GetFormJSON("form_Search"), page:1});
+	return false;
+})
+
+//批量删除
+$("#btnDelAll").on("click", function(){
+	var strIDs=GetCheckIDs("grid1");
+	if (strIDs==""){
+		layer.msg('请先勾选要删除的记录', {time: 800});
+		return;
+	}
+
+	layer.confirm('确定要批量删除勾选的记录吗？', function(index){
+		$.ajax({
+            url: "T1/BatchDel?IDs="+strIDs,
+		    type: "get",
+		    dataType: "json",
+		    success: function (res) {
+		        if (res.StatusCode == "Success") {
+				    $("div[lay-id='grid1'] .layui-laypage-btn").click();
+				    layer.msg('删除成功', {time: 800});
+			    }
+		    }
+		});
+		layer.close(index);
+	});
+
+});
+
+//删除
+function AJAX_Del(ID){
+	layer.confirm('确定要删除吗？', function(index){
+	    $.ajax({
+            url: "T1/Del?ID="+ID,
+		    type: "get",
+		    dataType: "json",
+		    success: function(res){
+		        if (res.StatusCode == "Success") {
+				    $("div[lay-id='grid1'] .layui-laypage-btn").click();
+				    layer.msg('删除成功', {time: 800});
+			    }
+		    }
+	    });
+	    layer.close(index);
+	});
+};
+
+//添加
+$("#btnAdd").on("click", function(){
+    $.get('T1_Add', {}, function (data) {
+        var layerIndex = layer.open({
+            type: 1,
+            title: "添加",
+            content: data,
+            area: ['auto', 'auto'],
+            shadeClose: true,
+            btn: ['保存', '取消'],
+            btn1: function (index, layero) {
+                if (AJAX_T1_Add_Save() != false) {
+                    layer.close(layerIndex);
+                }
+            }
+        });
+    });
+});
+
+//修改
+	function AJAX_Dialog_T1_Edit(ID) {
+        $.get('T1_Edit?ID=' + ID, {}, function (data) {
+            var layerIndex = layer.open({
+                type: 1,
+                title: "修改",
+                content: data,
+                area: ['auto', 'auto'],
+                shadeClose: true,
+                btn: ['保存', '取消'],
+                btn1: function (index, layero) {
+                    if (AJAX_T1_Edit_Save() != false) {
+                        layer.close(layerIndex);
+                    }
+                }
+            });
+        });
+}
+</script>

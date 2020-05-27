@@ -1,0 +1,30 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>柱状图-热词</title>
+    <script src="../../../Scripts/echarts.min.js"></script>
+    <script src="../../../Scripts/extents/snchart.js"></script>
+</head>
+<body>
+    <div id="main" style="width: 600px;height:400px;"></div>
+    <script>
+        var xAxisData = ['渐变色', '阴影', '点击', '缩放', '或者', '示例', '特性', 'abc', 'bcd', 'efg'];
+        var seriesData = [490, 460, 430, 400, 360, 330, 310, 290, 260, 200];
+        var yMax = 500;
+        var titleText = "评论热词";
+
+        snchart.histogram('main', titleText, xAxisData, seriesData, yMax);
+
+
+        xAxisData = ['123', '4556', '点击', '缩放', '或者', '示例', '特性', 'abc', 'bcd', 'efg'];
+        seriesData = [360, 330, 310, 290, 490, 460, 430, 400, 260, 200];
+        yMax = 600;
+        titleText = "评论热词123";
+
+
+        snchart.histogram('main', titleText, xAxisData, seriesData, yMax);
+
+    </script>
+</body>
+</html>

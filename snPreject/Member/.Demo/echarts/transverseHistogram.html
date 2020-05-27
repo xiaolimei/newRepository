@@ -1,0 +1,33 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>横向柱状图</title>
+    <script src="../../../Scripts/echarts.min.js"></script>
+    <script src="../../../Scripts/extents/snchart.js"></script>
+</head>
+<body>
+    <div id="main" style="width: 600px;height:400px;"></div>
+
+    <script>
+        var titleText = '星座排行';
+        var xAxisName = '占比';
+        var datasetSource = [
+            ['score', 'type'],
+            [40.6, '双子座'],
+            [50.1, '金牛座'],
+            [60.4, '天秤座'],
+            [70.1, '处女座'],
+            [76.7, '天蝎座'],
+            [80.1, '水瓶座'],
+            [84.6, '狮子座'],
+            [86.7, 'a座'],
+            [90.3, 'b座'],
+        ];
+        var seriesEncodeX = 'score';
+        var seriesEncodeY = 'type';
+        snchart.transverseHistogram('main', titleText, xAxisName, datasetSource, seriesEncodeX, seriesEncodeY);
+
+    </script>
+</body>
+</html>

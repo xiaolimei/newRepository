@@ -1,0 +1,617 @@
+﻿@{
+    Layout = null;
+}
+@model Web.Models.HotVideoVM
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>视频详情</title>
+    <link href="~/Member/CSS/hotVideo/reset.css" rel="stylesheet" />
+    <link href="~/Member/CSS/hotVideo/detail.css" rel="stylesheet" />
+</head>
+<body>
+    <main class="videoContainer">
+        <div class="videoLeft">
+            <div class="video">
+                <div class="video-row-flex">
+                    <div class="video-col-1">
+                        <a href="javascript:;">
+                            <img alt="@Model.Video.Title" src="@Model.Video.Image">
+                        </a>
+                        <div class="time">@ViewHelper.ShowFormatSeconds(Model.Video.Duration)</div>
+                    </div>
+                    <div class="video-col-2">
+                        <div class="tags">
+                            <span>穿搭</span>
+                            <div class="title">
+                                @Model.Video.Title
+                                @if (Model.Video.IsSaleAttr == 1)
+                                {
+                                    <img style="width: 14px;height: 14px;vertical-align: middle;cursor: pointer;" src="Images/temp1/cart.png" alt="购物车">
+                                }
+                            </div>
+                        </div>
+                        <div class="operation">
+                            <div>
+                                <span>
+                                    <a id="a-play" href="//www.douyin.com/share/video/@Model.Video.DYVideoID/?mid=@Model.Music.DYMusicID" target="_blank">
+                                        播放
+                                    </a>
+                                </span>
+                                <span><img src="Images/temp1/星.png" alt=""></span>
+                            </div>
+                            <div>
+                                <span><img src="Images/temp1/lvzhou_hangweifenxi.png" alt=""></span>
+                                <span><img src="Images/temp1/眼睛.png" alt=""></span>
+                                <span onclick="showQrcode()"><img src="Images/temp1/二维码.png" alt=""></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="videoInfo">
+                <div class="condition">
+                    <div class="condition-item">
+                        <div class="condition-name">点赞数量：</div>
+                        <div class="condition-list">@ViewHelper.ShowUnitNum(Model.Video.PraiseNum)</div>
+                    </div>
+                </div>
+                <div class="condition">
+                    <div class="condition-item">
+                        <div class="condition-name">背景音乐：</div>
+                        <div class="condition-list">@Model.Music.Title</div>
+                    </div>
+                </div>
+                <div class="condition">
+                    <div class="condition-item">
+                        <div class="condition-name">魔法道具：</div>
+                        <div class="condition-list">烟雾</div>
+                    </div>
+                </div>
+                <div class="condition">
+                    <div class="condition-item">
+                        <div class="condition-name">参与话题：</div>
+                        <div class="condition-list">#新闻助手</div>
+                    </div>
+                </div>
+                <div class="condition">
+                    <div class="condition-item">
+                        <div class="condition-name">发布地点：</div>
+                        <div class="condition-list">@Model.Video.Location</div>
+                    </div>
+                </div>
+                <div class="condition">
+                    <div class="condition-item">
+                        <div class="condition-name">提及品牌：</div>
+                        <div class="condition-list">花西子</div>
+                    </div>
+                </div>
+                <div class="flex-between">
+                    <div class="user">
+                        <img src="https://p3-dy-ipv6.byteimg.com/aweme/1080x1080/f7f4000ea898b0ee3913.jpeg" alt="logo">
+                        <span>@Model.Artist.NickName</span>
+                    </div>
+                    <div class="fans">
+                        @ViewHelper.ShowUnitNum(Model.Artist.DYFansNum)粉丝
+                    </div>
+                </div>
+            </div>
+            <div class="data">
+                <div>数据表现</div>
+                <div class="dataCanvas">
+                    <div id="echart-radar-data" style="width: 400px;height:400px;">
+
+                    </div>
+                    <div class="canvasInfo">
+                        <div>
+                            <span><img src="Images/temp1/心.png">平均点赞</span>
+                            <span>@ViewHelper.ShowUnitNum(Model.Artist.PraiseNum / Math.Max(Model.Artist.DYFansNum, 1))</span>
+                        </div>
+                        <div>
+                            <span><img src="Images/temp1/评论.png" alt="">平均评论</span>
+                            <span>@ViewHelper.ShowUnitNum(Model.Artist.CommentNum / Math.Max(Model.Artist.DYFansNum, 1))</span>
+                        </div>
+                        <div>
+                            <span><img src="Images/temp1/分享.png" alt="">平均分享</span>
+                            <span>@ViewHelper.ShowUnitNum(Model.Artist.ShareNum / Math.Max(Model.Artist.DYFansNum, 1))</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="videoRight">
+            <ul class="mianTab">
+                <li class="active">视频详情</li>
+                <li>趋势表现</li>
+                <li>观众分析</li>
+                <li>关联商品</li>
+            </ul>
+            <div class="activeContainer">
+                <!-- 视频详情 -->
+                <div class="item on">
+                    <div class="videoDetails">
+                        <div class="trend">
+                            <ul class="topTab">
+                                <li class="tabActive">评论Top10</li>
+                                <li>商品热词Top10</li>
+                            </ul>
+                            <div class="TopContiner">
+                                <div class="on" id="echart-histogram-commentHotWord" style="width: 800px;height:400px;"></div>
+                                <div id="echart-histogram-productHotWord" style="width: 800px;height:400px;"></div>
+                            </div>
+                        </div>
+                        <div class="comment">
+                            <div class="commentTitle">全部评论（@Model.Video.CommentNum）</div>
+                            <div id="SNDataX_CommentList" class="commentList">
+                                @Html.Action("HotVideo_CommentItems", new { dyVideoId = Model.Video.DYVideoID })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="analysis">
+                        <div class="userInfo">
+                            <img src="https://p9-dy-ipv6.byteimg.com/aweme/1080x1080/tos-cn-i-0813/9f0d799e2cc14aeba7d21574d044220f.jpeg" alt="">
+                            <div>
+                                <span>@Model.Music.Title</span>
+                                <span>@Model.Music.UsePeoples</span>
+                            </div>
+                        </div>
+                        <div class="populationDistribution">
+                            <span>使用人数行业分布</span>
+                            <div class="populationDistributionCanvas"></div>
+                        </div>
+                        <div class="popularVideos">
+                            <span>音乐热门视频</span>
+                            <div class="popularVideosList">
+                                <div class="popularVideosItemContainer">
+                                    <div class="popularVideoItem">
+                                        <img src="https://p3-dy.byteimg.com/img/tos-cn-p-0015/6c77345bf55f41268b6b909ba409412a~noop.jpeg?from=2563711402_large" alt="">
+                                        <div class="num"><img src="Images/temp1/心(2).png" alt=""> 00:12</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 趋势表现 -->
+                <div class="item">
+                    <div class="all">
+                        <div><span>24小时内新增</span><span>获赞数：</span><span>@ViewHelper.ShowUnitNum(Model.LatestVideoTrend.PraiseNumGrowth)</span></div>
+                        <div><span>24小时内新增</span><span>评论数：</span><span>@ViewHelper.ShowUnitNum(Model.LatestVideoTrend.CommentNumGrowth)</span></div>
+                        <div><span>24小时内新增</span><span>分享数：</span><span>@ViewHelper.ShowUnitNum(Model.LatestVideoTrend.ShareNumGrowth)</span></div>
+                    </div>
+                    <div class="trend_1">
+                        <span>获赞变化趋势</span>
+                        <div class="trend_1_canvas" id="echart-trendLine-praise" style="width:1300px;height:320px;">获赞变化趋势</div>
+                    </div>
+                    <div class="trend_2">
+                        <span>评论变化趋势</span>
+                        <div class="trend_2_canvas" id="echart-trendLine-comment" style="width:1300px;height:320px;">评论变化趋势</div>
+                    </div>
+                    <div class="trend_3">
+                        <span>分享变化趋势</span>
+                        <div class="trend_3_canvas" id="echart-trendLine-share" style="width:1300px;height:320px;">分享变化趋势</div>
+                    </div>
+                </div>
+                <!-- 观众分析 -->
+                <div class="item">
+                    <div class="all_audience">
+                        <div>
+                            <span>性别：</span>
+                            <span id="fansPortrait-most-sexText">xx</span><span>观众居多，占比</span>
+                            <span id="fansPortrait-most-sexValue">0%</span>
+                        </div>
+                        <div>
+                            <span>年龄：</span>
+                            <span id="fansPortrait-most-ageText">xx</span><span>岁观众居多，占比</span>
+                            <span id="fansPortrait-most-ageValue">0%</span>
+                        </div>
+                        <div>
+                            <span>地域：</span>
+                            <span id="fansPortrait-most-provinceText">xx</span><span>观众居多，占比</span>
+                            <span id="fansPortrait-most-provinceValue">0%</span>
+                        </div>
+                        <div>
+                            <span>星座：</span>
+                            <span id="fansPortrait-most-constellationText">xx</span><span>观众居多，占比</span>
+                            <span id="fansPortrait-most-constellationValue">0%</span>
+                        </div>
+                    </div>
+                    <div class="audienceContainer">
+                        <div>
+                            <div class="audience_sex">
+                                <span>性别分布</span>
+                                <div class="sexCanvas">
+                                    <div id="echart-singleHorizontalScale-Sex" style="width:650px;height:300px;">
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="audience_address">
+                                <p>
+                                    <span>地域分布</span>
+                                    <span class="toggle_address">
+                                        <span class="toggle_address_active">省份</span>
+                                        <span>城市</span>
+                                    </span>
+                                </p>
+                                <div class="addressCanvas">
+                                    <div class="addressTable audience_address_active">
+                                        <table width="100%">
+                                            <thead>
+                                                <tr>
+                                                    <th>
+                                                        <span class="table-header-column">
+                                                            省份
+                                                        </span>
+                                                    </th>
+                                                    <th>
+                                                        <span class="table-header-column">
+                                                            占比
+                                                        </span>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="tbody-provice">
+                                                <tr>
+                                                    <td align="center">四川</td>
+                                                    <td align="center">11.58%</td>
+                                                </tr>
+                                                <tr>
+                                                    <td align="center">广东</td>
+                                                    <td align="center">9.58%</td>
+                                                </tr>
+                                                <tr>
+                                                    <td align="center">xxx</td>
+                                                    <td align="center">9.58%</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="addressTable">
+                                        <table width="100%">
+                                            <thead>
+                                                <tr>
+                                                    <th>
+                                                        <span class="table-header-column">
+                                                            城市
+                                                        </span>
+                                                    </th>
+                                                    <th>
+                                                        <span class="table-header-column">
+                                                            占比
+                                                        </span>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="tbody-city">
+                                                <tr>
+                                                    <td align="center">成都</td>
+                                                    <td align="center">88.58%</td>
+                                                </tr>
+                                                <tr>
+                                                    <td align="center">长沙</td>
+                                                    <td align="center">77.58%</td>
+                                                </tr>
+                                                <tr>
+                                                    <td align="center">xxx</td>
+                                                    <td align="center">6.58%</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="audience_age">
+                                <span>年龄分布</span>
+                                <div class="ageCanvas">
+                                    <div id="echart-ring-age" style="width:650px;height:300px;"></div>
+                                </div>
+                            </div>
+                            <div class="audience_constellation">
+                                <span>星座分布</span>
+                                <div class="constellationCanvas">
+                                    <div id="echart-ring-constellation" style="width:650px;height:400px;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 关联商品 -->
+                <div class="item tableContainer">
+                    <table>
+                        <thead class="table-thead">
+                            <tr>
+                                <th>
+                                    <span class="table-header-column">
+                                        商品
+                                    </span>
+                                </th>
+                                <th>
+                                    <span class="table-header-column">
+                                        售价
+                                    </span>
+                                </th>
+                                <th>
+                                    <span class="table-header-column">
+                                        预估佣金
+                                    </span>
+                                </th>
+                                <th>
+                                    <span class="table-header-column">
+                                        全网销量
+                                    </span>
+                                </th>
+                                <th>
+                                    <span class="table-header-column">
+                                        抖音浏览量
+                                    </span>
+                                </th>
+                                <th>
+                                    <span class="table-header-column">
+                                        操作
+                                    </span>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr height="130">
+                                <td>
+                                    <div class="commodityInfo">
+                                        <img src="https://lf3-effectcdn-tos.pstatp.com/obj/ies.fe.effect/1e0ebfb003623f7ecc2bc06208909233" alt="">
+                                        <div>
+                                            <span>春季新版宽松雪纺衫</span>
+                                            <span>来源：<img class="taobao" src="Images/temp1/淘宝.png" alt=""> 淘宝</span>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    128.9/ <span style="text-decoration: line-through;color: #787a7a;font-size: 12px;">原价289</span>
+                                </td>
+                                <td>
+                                    ¥29.96
+                                </td>
+                                <td>
+                                    192.3w
+                                </td>
+                                <td>
+                                    8563.3w
+                                </td>
+                                <td class="more">
+                                    <span>暂开详情</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+
+    <script>
+        $('.mianTab li').click(function () {
+            $(".mianTab li").eq($(this).index()).addClass("active").siblings().removeClass('active');
+            $(".activeContainer .item").eq($(".mianTab li").index(this)).addClass("on").siblings().removeClass('on');
+        });
+
+        $('.topTab li').click(function () {
+            $(".topTab li").eq($(this).index()).addClass("tabActive").siblings().removeClass('tabActive');
+            $(".TopContiner div").eq($(".topTab li").index(this)).addClass("on").siblings().removeClass('on');
+        });
+        $('.toggle_address span').click(function () {
+            $(".toggle_address span").eq($(this).index()).addClass("toggle_address_active").siblings().removeClass('toggle_address_active');
+            $(".addressCanvas .addressTable").eq($(".toggle_address span").index(this)).addClass("audience_address_active").siblings().removeClass('audience_address_active');
+        });
+    </script>
+    <!--显示抖音视频二维码-->
+    <script>
+        function showQrcode() {
+            var url = 'https:' + $('#a-play').attr('href');
+            layer.open({
+                type: 1,
+                content: '<div id="qrcode" height="100" width="100"></div>',
+                success: function (layero, index) {
+                    new QRCode(document.getElementById("qrcode"), url);
+                }
+            });
+        }
+    </script>
+    <!--数据表现-->
+    <script>
+        var titleText = '雷达图';
+        var radarIndicator = [
+            { name: '点赞', max: 8000000 },
+            { name: '评论', max: 1000000 },
+            { name: '转发', max: 800000 }
+        ];
+        var radarSplitNumber = 3;
+        var seriesData = [
+            {
+                value: [@Model.Video.PraiseNum, @Model.Video.CommentNum, @Model.Video.ShareNum],
+            }
+        ];
+        snchart.singleRadar('echart-radar-data', titleText, radarIndicator, radarSplitNumber, seriesData);
+    </script>
+    <!--评论热词-->
+    <script>
+        var data = @Html.Raw(Model.Video.HotWord);
+        var titleText = "评论热词";
+        var yMax = 100;
+        var xAxisData = [];
+        var seriesData = [];
+        for (var i in data) {
+            xAxisData.push(i);
+            seriesData.push(data[i]);
+        }
+        snchart.histogram('echart-histogram-commentHotWord', titleText, xAxisData, seriesData, yMax);
+    </script>
+    <!--商品热词-->
+    <script>
+        var data = { '龙虾': 100, '啤酒': 96, '蒜蓉': 80, '香辣': 78, '麻辣': 89, '五香': 88, '爆炒': 60 };
+        var titleText = "商品热词";
+        var yMax = 100;
+        var xAxisData = [];
+        var seriesData = [];
+        for (var i in data) {
+            xAxisData.push(i);
+            seriesData.push(data[i]);
+        }
+        snchart.histogram('echart-histogram-productHotWord', titleText, xAxisData, seriesData, yMax);
+    </script>
+    <!--获赞变化趋势-->
+    <script>
+        var data=@Html.Raw(Model.PraiseTotalTrend);
+        var titleText = "获赞变化趋势";
+        var xAxisData =[];
+        var seriesData = [];
+        for (var i in data) {
+            xAxisData.push(i);
+            seriesData.push(data[i]);
+        }
+        snchart.trendLine('echart-trendLine-praise', titleText, xAxisData, seriesData);
+    </script>
+    <!--评论变化趋势-->
+    <script>
+        var data=@Html.Raw(Model.CommentTotalTrend);
+        var titleText = "评论变化趋势";
+        var xAxisData = [];
+        var seriesData = [];
+        for (var i in data) {
+            xAxisData.push(i);
+            seriesData.push(data[i]);
+        }
+        snchart.trendLine('echart-trendLine-comment', titleText, xAxisData, seriesData);
+    </script>
+    <!--分享变化趋势-->
+    <script>
+        var data=@Html.Raw(Model.ShareTotalTrend);
+        var titleText = "分享变化趋势";
+        var xAxisData = [];
+        var seriesData = [];
+        for (var i in data) {
+            xAxisData.push(i);
+            seriesData.push(data[i]);
+        }
+        snchart.trendLine('echart-trendLine-share', titleText, xAxisData, seriesData);
+    </script>
+    <!--性别分布-->
+    <script>
+        var titleText = '性别分布';
+        var data=@Html.Raw(Model.LatestVideoTrend.Distribution_Sex);
+        var legendData = [];
+        var seriesData = [];
+        var total = 0;
+        for (var i in data) {
+            legendData.push(i);
+            seriesData.push(data[i]);
+            total += data[i];
+        }
+        var mostValue = 0;
+        for (var i in data) {
+            if (data[i] > mostValue) {
+                mostValue = data[i];
+                $("#fansPortrait-most-sexText").text(i);
+                $("#fansPortrait-most-sexValue").text(((mostValue / total) * 100).toFixed(2)+ '%');
+            }
+        }
+        snchart.singleHorizontalScale('echart-singleHorizontalScale-Sex', titleText, legendData, seriesData);
+    </script>
+    <!--年龄分布-->
+    <script>
+        var titleText = '年龄分布';
+        var seriesName = '年龄分布';
+        var data=@Html.Raw(Model.LatestVideoTrend.Distribution_Age);
+        var legendData = [];
+        var seriesData = [];
+        var total = 0;
+        for (var i in data) {
+            legendData.push(i);
+            seriesData.push(data[i]);
+            total += data[i];
+        }
+        var mostValue = 0;
+        for (var i in data) {
+            if (data[i] > mostValue) {
+                mostValue = data[i];
+                $("#fansPortrait-most-ageText").text(i);
+                $("#fansPortrait-most-ageValue").text(((mostValue / total) * 100).toFixed(2) + '%');
+            }
+        }
+        snchart.ring('echart-ring-age', titleText, legendData, seriesName, seriesData);
+    </script>
+    <!--地域-省份分布-->
+    <script>
+        var data=@Html.Raw(Model.LatestVideoTrend.Distribution_Province);
+        var total = 0;
+        for (var i in data) {
+            total += data[i];
+        }
+        var trHtml = '';
+        var mostValue = 0;
+        for (var i in data) {
+            trHtml += '<tr><td align="center">' + i + '</td><td align="center">' + ((data[i] / total) * 100).toFixed(2)+'%</td></tr>';
+            if (data[i] > mostValue) {
+                mostValue = data[i];
+                $("#fansPortrait-most-provinceText").text(i);
+                $("#fansPortrait-most-provinceValue").text(((mostValue / total) * 100).toFixed(2)  +'%');
+            }
+        }
+        $("#tbody-provice").html(trHtml);
+    </script>
+    <!--地域-城市分布-->
+    <script>
+        var data=@Html.Raw(Model.LatestVideoTrend.Distribution_City);
+        var total = 0;
+        for (var i in data) {
+            total += data[i];
+        }
+        var trHtml = '';
+        //var mostValue = 0;
+        for (var i in data) {
+            trHtml += '<tr><td align="center">' + i + '</td><td align="center">' + ((data[i] / total) * 100).toFixed(2) +'%</td></tr>';
+            //if (data[i] > mostValue) {
+            //    mostValue = data[i];
+            //    $("#fansPortrait-most-cityText").text(i);
+            //    $("#fansPortrait-most-cityValue").text(((mostValue / total)*100).toFixed(2) +'%');
+            //}
+        }
+        $("#tbody-city").html(trHtml);
+    </script>
+    <!--星座分布-->
+    <script>
+        var titleText = '星座排行';
+        var xAxisName = '占比';
+        var data=@Html.Raw(Model.LatestVideoTrend.Distribution_Constellation);
+        var total = 0;
+        for (var i in data) {
+            total += data[i];
+        }
+        var datasetSource = [
+            ['value', 'name']
+        ];
+        var mostValue = 0;
+        for (var i in data) {
+            datasetSource.push([((data[i] / total) * 100).toFixed(2), i]);
+            if (data[i] > mostValue) {
+                mostValue = data[i];
+                $("#fansPortrait-most-constellationText").text(i);
+                $("#fansPortrait-most-constellationValue").text(((mostValue / total) * 100).toFixed(2) + '%');
+            }
+        }
+        var seriesEncodeX = 'value';
+        var seriesEncodeY = 'name';
+        snchart.transverseHistogram('echart-ring-constellation', titleText, xAxisName, datasetSource, seriesEncodeX, seriesEncodeY);
+
+    </script>
+
+    <!--评论列表-->
+    <script>
+//初始化懒加载
+//$.LazyPage({ TargetID: "SNDataX_CommentList", Url: "HotVideo_CommentItems", DataFormID: "#", DataBoxID: "ListContent", MemberLevel: 1, MemberDataLimit: 25 });
+    </script>
+</body>
+</html>

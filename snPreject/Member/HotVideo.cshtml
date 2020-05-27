@@ -1,0 +1,386 @@
+﻿@{
+    Layout = null;
+}
+<link href="/Member/CSS/hotVideo/PopularVideos.css" rel="stylesheet" />
+
+
+<div class="wrap_hotVideo">
+    <!-- 搜索区 -->
+    <form id="form_Search" name="form_Search" method="post" action="#" class="layui-form" style=" margin: 20px 12px 20px 20px;">
+        <main>
+            <!-- 搜索框 -->
+            <div class="search">
+                <input class="hot-input" type="text" name="txtKeyWord" placeholder="请输入视频链接、关键词、标题或热词试试" onfocus="this.placeholder=''" onblur="this.placeholder='请输入视频链接、关键词、标题或热词试试'">
+                <span class="hot-input-suffix">
+                    <button type="button" class="hot_btn_primary" onclick="search();">
+                        <i class="iconfont searchIcon">&#xe645;</i>
+                    </button>
+                </span>
+            </div>
+            <!-- 条件搜索 -->
+            <div class="condition-search">
+                <div class="condition">
+                    <div class="condition-name">视频分类：</div>
+                    <div class="condition-list">
+                        <div class="condition-tags">
+                            <input type="hidden" id="txtCategoryID" name="txtCategoryID" value="0" />
+                            <span class="condition-tag condition-tags-tag-checkable condition-tag-checkable-checked" data-value="0">全部</span>
+                            <span class="condition-tag condition-tags-tag-checkable" data-value="0">网红美女</span>
+                            <span class="condition-tag condition-tags-tag-checkable" data-value="0">网红帅哥</span>
+                            <span class="condition-tag condition-tags-tag-checkable" data-value="0">文学艺术</span>
+                            <span class="condition-tag condition-tags-tag-checkable" data-value="0">职场教育</span>
+                            <span class="condition-tag condition-tags-tag-checkable" data-value="0">影视娱乐</span>
+                            <span class="condition-tag condition-tags-tag-checkable" data-value="0">摄影教学</span>
+                            <span class="condition-tag condition-tags-tag-checkable" data-value="0">知识质询</span>
+                            <span class="condition-tag condition-tags-tag-checkable" data-value="0">办公软件</span>
+                            <span class="condition-tag condition-tags-tag-checkable" data-value="0">养生健康</span>
+                            <span class="condition-tag condition-tags-tag-checkable" data-value="0">穿搭</span>
+                            <span class="condition-tag condition-tags-tag-checkable" data-value="0">游戏</span>
+                            <span class="condition-tag condition-tags-tag-checkable" data-value="0">音乐</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="condition">
+                    <div class="condition-item">
+                        <div class="condition-name">点赞数量：</div>
+                        <div class="condition-list">
+                            <select lay-filter="ddlPraiseRange" id="ddlPraiseRange" name="ddlPraiseRange">
+                                <option value="0">全部</option>
+                                <option value="1">&lt;&nbsp;1万</option>
+                                <option value="2">1万&sim;5万</option>
+                                <option value="3">5万&sim;10万</option>
+                                <option value="4">10万&sim;50万</option>
+                                <option value="5">50万&sim;100万</option>
+                                <option value="6">100万&sim;200万</option>
+                                <option value="7">&gt;&nbsp;200万</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="condition-item">
+                        <div class="condition-name">视频时长：</div>
+                        <div class="condition-list">
+                            <div>
+                                <select lay-filter="ddlDurationRange" id="ddlDurationRange" name="ddlDurationRange">
+                                    <option value="0">全部</option>
+                                    <option value="1">&lt;&nbsp;15秒</option>
+                                    <option value="2">15秒&sim;30秒 </option>
+                                    <option value="3">30秒&sim;60秒</option>
+                                    <option value="4">&gt;&nbsp;60秒</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="condition-item">
+                        <input type="hidden" id="txtIsSaleAttr" name="txtIsSaleAttr" value="0" />
+                        <input type="checkbox" lay-filter="chkIsSaleAttr" />
+                        <span style=" color: #ffffff;font-size: 12px;">关联商品视频</span>
+                        <img style="width: 16px; height: 16px; vertical-align: middle; margin-left: 8px;" src="./Images/cart.png" alt="购物车">
+                    </div>
+                    <div class="condition-item">
+                        <input type="hidden" id="txtIsComponentAttr" name="txtIsComponentAttr" value="0" />
+                        <input type="checkbox" lay-filter="chkIsComponentAttr" style="vertical-align:middle;" />
+                        <span style=" color: #ffffff;font-size: 12px;">关联组件视频</span>
+                        <img style="width: 18px;height: 18px;vertical-align: middle;margin-left: 8px;" src="./Images/relation.png" alt="购物车">
+                    </div>
+                </div>
+                <div class="condition">
+                    <div class="condition-item">
+                        <div class="condition-name">男女比例：</div>
+                        <div class="condition-list">
+                            <div>
+                                <select lay-filter="ddlVisitorType_Sex" id="ddlVisitorType_Sex" name="ddlVisitorType_Sex">
+                                    <option value="0">全部</option>
+                                    <option value="1">男性偏多</option>
+                                    <option value="2">女性偏多</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="condition-item">
+                        <div class="condition-name">主要年龄：</div>
+                        <div class="condition-list">
+                            <div>
+                                <select lay-filter="ddlVisitorType_Age" id="ddlVisitorType_Age" name="ddlVisitorType_Age">
+                                    <option value="0">全部</option>
+                                    <option value="1">6&sim;17岁</option>
+                                    <option value="2">18&sim;24岁</option>
+                                    <option value="3">25&sim;30岁</option>
+                                    <option value="4">31&sim;35岁</option>
+                                    <option value="5">36&sim;40岁</option>
+                                    <option value="6">41岁以上</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="condition-item">
+                        <div class="condition-name">主要地域：</div>
+                        <div class="condition-list">
+                            <div id="address">
+                                <select lay-filter="ddlVisitorType_Province" id="ddlVisitorType_Province" name="ddlVisitorType_Province"><option value="">全部</option></select>
+                                <select lay-filter="ddlVisitorType_City" id="ddlVisitorType_City" name="ddlVisitorType_City"><option value="">全部</option></select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="condition flexbox">
+                    <div class="condition-item">
+                        <div class="condition-name">发布时间：</div>
+                        <div class="condition-list">
+                            <input type="hidden" id="txtPublishTime" name="txtPublishTime" value="30" />
+                            <div class="condition-radio-group">
+                                <label class="condition-radio-button-wrapper condition-radio-button-wrapper-checked" data-value="0.25">
+                                    <span>6小时</span>
+                                </label>
+                                <label class="condition-radio-button-wrapper" data-value="0.5">
+                                    <span>12小时</span>
+                                </label>
+                                <label class="condition-radio-button-wrapper" data-value="1">
+                                    <span>24小时</span>
+                                </label>
+                                <label class="condition-radio-button-wrapper" data-value="3">
+                                    <span>近3天</span>
+                                </label>
+                                <label class="condition-radio-button-wrapper" data-value="7">
+                                    <span>近7天</span>
+                                </label>
+                                <label class="condition-radio-button-wrapper" data-value="15">
+                                    <span>近15天</span>
+                                </label>
+                                <label class="condition-radio-button-wrapper" data-value="30">
+                                    <span>近30天</span>
+                                </label>
+                                <label class="condition-radio-button-wrapper" data-value="60">
+                                    <span>近60天</span>
+                                </label>
+                                <label class="condition-radio-button-wrapper" data-value="90">
+                                    <span>近90天</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tableSort">
+                        <input type="hidden" id="txtSort" name="sort" value="0" />
+                        <span>排序：</span><a class="aCurrent" data-sort="0">综合排序</a><a data-sort="1">点赞最多</a><a data-sort="2">评论最多</a><a data-sort="3" style="margin-right:0;">分享最多</a>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </form>
+
+    <!-- 数据列表区 -->
+    <div class="tableContainer">
+        <table>
+            <thead class="table-thead">
+                <tr>
+                    <th style="min-width:173px;">
+                        <span class="table-header-column">
+                            <span>传播指数<span tooltip="说明文本内容" style="margin-left:5px;width: 14px;height: 14px;display: inline-block;vertical-align: text-bottom;background: url(./Images/more.png) center center;background-size: 14px;"></span></span>
+                        </span>
+                    </th>
+                    <th style="min-width:930px;">
+                        <span class="table-header-column">
+                            视频内容
+                        </span>
+                    </th>
+                    <th style="min-width:219px;">
+                        <span class="table-header-column">
+                            播主
+                        </span>
+                    </th>
+                    <th style="min-width:90px;">
+                        <span class="table-header-column">
+                            点赞数
+                        </span>
+                    </th>
+                    <th style="min-width:90px;">
+                        <span class="table-header-column">
+                            评论数
+                        </span>
+                    </th>
+                    <th style="min-width:90px;">
+                        <span class="table-header-column">
+                            转发数
+                        </span>
+                    </th>
+                    <th style="min-width:97px;">
+                        <span class="table-header-column">
+                            操作
+                        </span>
+                    </th>
+                </tr>
+            </thead>
+            <tbody id="ListContent">
+            </tbody>
+        </table>
+    </div>
+    <div LazyPage_Loading style="display:none;" class="hotVideo_bottom"><img src="~/Member/Images/loading.png" style="width:22px; height:22px; vertical-align:middle; display:inline; vertical-align:middle; margin:-1px 5px 0 0;" />正在加载</div>
+    <div LazyPage_NoMore style="display:none;" class="hotVideo_bottom">没有更多了</div>
+    <div LazyPage_Message1 style="display:none;" class="hotVideo_bottom">当前为免费版会员，仅可查看50个结果，<a href="">立即升级</a>会员版本，可查看更多数据</div>
+    <div LazyPage_Message2 style="display:none;" class="hotVideo_bottom">当前为高级版会员，仅可查看100个结果，<a href="">立即升级</a>会员版本，可查看更多数据</div>
+    <div LazyPage_Message3 style="display:none;" class="hotVideo_bottom">当前为豪华版会员，仅可查看500个结果，<a href="">立即升级</a>会员版本，可查看更多数据</div>
+    <div LazyPage_Message4 style="display:none;" class="hotVideo_bottom">当前为专业版会员，仅可查看1500个结果，<a href="">立即升级</a>会员版本，可查看更多数据</div>
+</div>
+
+<script type="text/javascript">
+    ; !function () {
+        //初始化懒加载
+        $.LazyPage({ TargetID: "SNDataX_APPBody", Url: "HotVideo_Items", DataFormID: "form_Search", DataBoxID: "ListContent", MemberLevel: 1, MemberDataLimit: 25 });
+
+    }();
+    layui.form.render();
+
+    //搜索
+    function search() {
+        $.LazyPage_Refresh("SNDataX_APPBody");
+    }
+    //表头浮动效果
+    $('#SNDataX_APPBody').on('scroll', function () {
+        var scrollTop = $("#SNDataX_APPBody").scrollTop();
+        var theadTop = $(".table-thead").offset().top;
+        if (scrollTop >= theadTop + 60) {
+            $(".table-thead").addClass("theadfixed");
+        } else {
+            $(".table-thead").removeClass("theadfixed");
+        }
+    });
+    //视频分类 点击
+    $(".condition-tags-tag-checkable").click(function () {
+        var value = $(this).attr('data-value');
+        $("#txtCategoryID").val(value);
+        search();
+    });
+    //点赞数量 选择
+    layui.form.on('select(ddlPraiseRange)', function (data) {
+        var value = data.value;
+        search();
+    });
+    //视频时长 选择
+    layui.form.on('select(ddlDurationRange)', function (data) {
+        var value = data.value;
+        search();
+    });
+    //关联商品 选择
+    layui.form.on('checkbox(chkIsSaleAttr)', function (data) {
+        var checked = data.elem.checked;
+        $("#txtIsSaleAttr").val(checked ? 1 : 0);
+        search();
+    });
+    //关联组件 选择
+    layui.form.on('checkbox(chkIsComponentAttr)', function (data) {
+        var checked = data.elem.checked;
+        $("#txtIsComponentAttr").val(checked ? 1 : 0);
+        search();
+    });
+    //视频时长 选择
+    layui.form.on('select(ddlVisitorType_Sex)', function (data) {
+        var value = data.value;
+        search();
+    });
+    //男女比例 选择
+    layui.form.on('select(ddlVisitorType_Sex)', function (data) {
+        var value = data.value;
+        search();
+    });
+    //主要年龄 选择
+    layui.form.on('select(ddlVisitorType_Age)', function (data) {
+        var value = data.value;
+        search();
+    });
+    //主要地域 联动选择 下面独立script标签内
+
+    //时间选择
+    $(".condition-radio-button-wrapper").click(function () {
+        var value = $(this).attr('data-value');
+        $("#txtPublishTime").val(value);
+        search();
+    });
+
+    //排序
+    $('.tableSort a').click(function () {
+        //切换效果
+        $(this).addClass("aCurrent").siblings().removeClass('aCurrent');
+        var sortValue = $(this).attr('data-sort');
+        $("#txtSort").val(sortValue);
+        search();
+    });
+
+    //视频详情
+    function hotVideoDetail(_this) {
+        var id = $(_this).attr('data-id');
+        $.get('HotVideo_Detail?id=' + id, {}, function (data) {
+            if (data.substring(0, 6) == "Failed") return;
+            console.log('VideoID=' + id);
+            console.log('DYVideoID=' + $(_this).attr('data-dyid'));
+            console.log('http://localhost/Member#HotVideo_Detail?id=' + id);
+            jQuery.Page({
+                HTML: data, TargetID: "SNDataX_APPBody",
+                onclose: function () { }
+            });
+        });
+    }
+</script>
+
+<script src="/Member/JS/hotVideo.js" type="text/javascript"></script>
+
+<script>
+    var regions = [
+        { 'province': '北京市', 'city': ['', '北京市'] },
+        { 'province': '天津市', 'city': ['', '天津市'] },
+        { 'province': '河北省', 'city': ['', '石家庄市', '唐山市', '秦皇岛市', '邯郸市', '邢台市', '保定市', '张家口市', '承德市', '沧州市', '廊坊市', '衡水市'] },
+        { 'province': '山西省', 'city': ['', '太原市', '大同市', '阳泉市', '长治市', '晋城市', '朔州市', '晋中市', '运城市', '忻州市', '临汾市', '吕梁市'] },
+        { 'province': '内蒙古自治区', 'city': ['', '呼和浩特市', '包头市', '乌海市', '赤峰市', '通辽市', '鄂尔多斯市', '呼伦贝尔市', '巴彦淖尔市', '乌兰察布市', '兴安盟', '锡林郭勒盟', '阿拉善盟'] },
+        { 'province': '辽宁省', 'city': ['', '沈阳市', '大连市', '鞍山市', '抚顺市', '本溪市', '丹东市', '锦州市', '营口市', '阜新市', '辽阳市', '盘锦市', '铁岭市', '朝阳市', '葫芦岛市'] },
+        { 'province': '吉林省', 'city': ['', '长春市', '吉林市', '四平市', '辽源市', '通化市', '白山市', '松原市', '白城市', '延边朝鲜族自治州'] },
+        { 'province': '黑龙江省', 'city': ['', '哈尔滨市', '齐齐哈尔市', '鸡西市', '鹤岗市', '双鸭山市', '大庆市', '伊春市', '佳木斯市', '七台河市', '牡丹江市', '黑河市', '绥化市', '大兴安岭地区'] },
+        { 'province': '上海市', 'city': ['', '上海市'] },
+        { 'province': '江苏省', 'city': ['', '南京市', '无锡市', '徐州市', '苏州市', '南通市', '连云港市', '淮安市', '盐城市', '扬州市', '镇江市', '泰州市', '宿迁市'] },
+        { 'province': '浙江省', 'city': ['', '杭州市', '宁波市', '温州市', '嘉兴市', '湖州市', '绍兴市', '金华市', '衢州市', '舟山市', '台州市', '丽水市'] },
+        { 'province': '安徽省', 'city': ['', '合肥市', '芜湖市', '蚌埠市', '淮南市', '马鞍山市', '淮北市', '铜陵市', '安庆市', '黄山市', '滁州市', '阜阳市', '宿州市', '六安市', '亳州市', '池州市', '宣城市'] },
+        { 'province': '福建省', 'city': ['', '福州市', '厦门市', '莆田市', '三明市', '泉州市', '漳州市', '南平市', '龙岩市', '宁德市'] },
+        { 'province': '江西省', 'city': ['', '南昌市', '景德镇市', '萍乡市', '九江市', '新余市', '鹰潭市', '赣州市', '吉安市', '宜春市', '抚州市', '上饶市'] },
+        { 'province': '山东省', 'city': ['', '济南市', '青岛市', '淄博市', '枣庄市', '东营市', '烟台市', '潍坊市', '济宁市', '泰安市', '威海市', '日照市', '莱芜市', '临沂市', '德州市', '聊城市', '滨州市', '菏泽市'] },
+        { 'province': '河南省', 'city': ['', '郑州市', '开封市', '洛阳市', '平顶山市', '安阳市', '鹤壁市', '新乡市', '焦作市', '濮阳市', '许昌市', '漯河市', '三门峡市', '南阳市', '商丘市', '信阳市', '周口市', '驻马店市'] },
+        { 'province': '湖北省', 'city': ['', '武汉市', '黄石市', '十堰市', '宜昌市', '襄阳市', '鄂州市', '荆门市', '孝感市', '荆州市', '黄冈市', '咸宁市', '随州市', '恩施土家族苗族自治州', '仙桃市', '潜江市', '天门市', '神农架林区'] },
+        { 'province': '湖南省', 'city': ['', '长沙市', '株洲市', '湘潭市', '衡阳市', '邵阳市', '岳阳市', '常德市', '张家界市', '益阳市', '郴州市', '永州市', '怀化市', '娄底市', '湘西土家族苗族自治州'] },
+        { 'province': '广东省', 'city': ['', '广州市', '韶关市', '深圳市', '珠海市', '汕头市', '佛山市', '江门市', '湛江市', '茂名市', '肇庆市', '惠州市', '梅州市', '汕尾市', '河源市', '阳江市', '清远市', '东莞市', '中山市', '潮州市', '揭阳市', '云浮市'] },
+        { 'province': '广西壮族自治区', 'city': ['', '南宁市', '柳州市', '桂林市', '梧州市', '北海市', '防城港市', '钦州市', '贵港市', '玉林市', '百色市', '贺州市', '河池市', '来宾市', '崇左市'] },
+        { 'province': '海南省', 'city': ['', '海口市', '三亚市', '儋州市', '五指山市', '琼海市', '文昌市', '万宁市', '东方市', '定安县', '屯昌县', '澄迈县', '临高县', '白沙黎族自治县', '昌江黎族自治县', '乐东黎族自治县', '陵水黎族自治县', '保亭黎族苗族自治县', '琼中黎族苗族自治县'] },
+        { 'province': '重庆市', 'city': ['', '重庆市'] },
+        { 'province': '四川省', 'city': ['', '成都市', '自贡市', '攀枝花市', '泸州市', '德阳市', '绵阳市', '广元市', '遂宁市', '内江市', '乐山市', '南充市', '眉山市', '宜宾市', '广安市', '达州市', '雅安市', '巴中市', '资阳市', '阿坝藏族羌族自治州', '甘孜藏族自治州', '凉山彝族自治州'] },
+        { 'province': '贵州省', 'city': ['', '贵阳市', '六盘水市', '遵义市', '安顺市', '毕节市', '铜仁市', '黔西南布依族苗族自治州', '黔东南苗族侗族自治州', '黔南布依族苗族自治州'] },
+        { 'province': '云南省', 'city': ['', '昆明市', '曲靖市', '玉溪市', '保山市', '昭通市', '丽江市', '普洱市', '临沧市', '楚雄彝族自治州', '红河哈尼族彝族自治州', '文山壮族苗族自治州', '西双版纳傣族自治州', '大理白族自治州', '德宏傣族景颇族自治州', '怒江傈僳族自治州', '迪庆藏族自治州'] },
+        { 'province': '西藏自治区', 'city': ['', '拉萨市', '日喀则市', '昌都市', '林芝市', '山南市', '那曲地区', '阿里地区'] },
+        { 'province': '陕西省', 'city': ['', '西安市', '铜川市', '宝鸡市', '咸阳市', '渭南市', '延安市', '汉中市', '榆林市', '安康市', '商洛市'] },
+        { 'province': '甘肃省', 'city': ['', '兰州市', '金昌市', '白银市', '天水市', '武威市', '平凉市', '酒泉市', '庆阳市', '定西市', '陇南市', '临夏回族自治州', '甘南藏族自治州'] },
+        { 'province': '青海省', 'city': ['', '西宁市', '海东市', '海北藏族自治州', '果洛藏族自治州', '玉树藏族自治州', '海西蒙古族藏族自治州'] },
+        { 'province': '宁夏回族自治区', 'city': ['', '银川市', '石嘴山市', '吴忠市', '固原市', '中卫市'] },
+        { 'province': '新疆维吾尔自治区', 'city': ['', '乌鲁木齐市', '克拉玛依市', '吐鲁番市', '哈密市', '昌吉回族自治州', '博尔塔拉蒙古自治州', '巴音郭楞蒙古自治州', '阿克苏地区', '克孜勒苏柯尔克孜自治州', '喀什地区', '和田地区', '伊犁哈萨克自治州', '塔城地区', '阿勒泰地区', '石河子市', '阿拉尔市', '图木舒克市', '五家渠市', '北屯市', '双河市', '可克达拉市'] },
+    ];
+    var selectProvince = $("#ddlVisitorType_Province");
+    selectProvince.html('<option value="">全部</option>');
+    var province;
+    for (var i in regions) {
+        province = regions[i].province;
+        if (!province)
+            continue;
+        selectProvince.append('<option value="' + province + '">' + province + '</option>');
+    }
+    layui.form.render();
+    //监听地域-省份选择
+    var selectCity = $("#ddlVisitorType_City");
+    layui.form.on('select(ddlVisitorType_Province)', function (data) {
+        selectCity.html('<option value="">全部</option>');
+        var city;
+        for (var i in regions) {
+            if (regions[i].province != data.value)
+                continue;
+            for (var j in regions[i].city) {
+                city = regions[i].city[j];
+                if (!city)
+                    continue;
+                selectCity.append('<option value="' + city + '">' + city + '</option>');
+            }
+        }
+        layui.form.render();
+    });
+</script>

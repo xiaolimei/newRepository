@@ -1,0 +1,21 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>环形图</title>
+    <script src="../../../Scripts/echarts.min.js"></script>
+    <script src="../../../Scripts/extents/snchart.js"></script>
+</head>
+
+<body>
+    <div id="main" style="width: 600px;height:400px;"></div>
+    <script>
+        var titleText = '访问来源';
+        var seriesName = '访问来源';
+        var legendData = ['搞笑', '美女', '生活', '情感', '户外'];
+        var seriesData = [335, 310, 345, 123, 987];
+
+        snchart.ring('main', titleText, legendData, seriesName, seriesData);
+    </script>
+</body>
+</html>
