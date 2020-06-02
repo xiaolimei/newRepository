@@ -1,0 +1,143 @@
+github: https://github.com/
+wifi: sanew
+密码：13670056805
+开机密码：sn668
+layui  入门指南：https://www.layui.com/doc/
+闪鸟--蓝湖  连接：https://lanhuapp.com/web/#/item?fid=all&commonly=all
+账号：965202286@qq.com 
+阿里巴巴矢量图标库  连接：https://www.iconfont.cn/manage/index    xiaolimei  和github绑定的
+测试二维码：http://www.sanew.cn/
+短信验证：http://localhost:61182/Manage  账号：超级管理员  888
+
+Echarts视频教程从入门到实战
+网盘地址：https://pan.baidu.com/s/1_PxHxQP7BaWyf3U9S4in3Q 提取码: 3vjc
+Echarts介绍
+https://blog.csdn.net/qq_40576686/article/details/78711191
+形状代码：
+https://echarts.apache.org/examples/zh/index.html#chart-type-graphGL
+
+jquery文档: 
+https://www.runoob.com/jquery/jquery-tutorial.html
+
+jqurey api 链接：
+http://hemin.cn/jq/
+
+form表单提交onclick和onsubmit：
+https://www.cnblogs.com/ahudyan-forever/p/5795463.html
+
+在登录页面如何实现记住用户名和密码这个功能
+https://blog.csdn.net/sixteen_cicle/article/details/52209663?utm_source=blogkpcl8
+
+uni-app官方文档
+https://uniapp.dcloud.io/
+
+flex文档：
+http://www.ruanyifeng.com/blog/2015/07/flex-grammar.html
+
+SVN账号：签出代码
+SVN服务器更改为使用IP访问
+https://192.168.101.200/svn/闪鸟数据平台/    
+/*旧的：https://SNServer01/svn/闪鸟数据平台/*/
+XLM  xlm626
+
+
+
+前端ui框架layui——layer弹出层-弹出框方法
+https://blog.csdn.net/qq_41676216/article/details/93302598
+
+<i class="iconfont">&#xe630;</i>
+
+SVN菜鸟安装使用教材：
+https://www.runoob.com/svn/svn-tutorial.html
+
+vs2017 快捷键设置
+https://jingyan.baidu.com/article/8275fc862277eb46a03cf605.html
+剪切行 ctrl+L
+查找下一个：F3
+粘贴行：ctrl+D
+取消撤销：ctrl+Y
+
+CSS控制文字，超出部分显示省略号
+单文本和多文本都可以
+https://www.cnblogs.com/liangdong/p/10362146.html
+
+js字符串截取函数slice()、substring()、substr()、split() 、John() 、indexOf()：
+https://my.oschina.net/u/1434139/blog/224271
+
+1. 通过subString()方法来进行字符串截取
+String sb = "bbbdsajjds";
+sb.substring(2, 4);
+从索引号2开始到索引好4结束（并且不包含索引4截取在内，也就是说实际截取的是2和3号字符）； 
+
+2. slice()
+第一个参数代表开始位置,第二个参数代表结束位置的下一个位置,截取出来的字符串的长度为第二个参数与第一个参数之间的差;若参数值为负数,则将该值加上字符串长度后转为正值;若第一个参数等于大于第二个参数,则返回空字符串.
+
+3. substring()
+第一个参数代表开始位置,第二个参数代表结束位置的下一个位置;若参数值为负数,则将该值转为0;两个参数中,取较小值作为开始位置,截取出来的字符串的长度为较大值与较小值之间的差.
+
+4. substr()
+第一个参数代表开始位置,第二个参数代表截取的长度
+
+
+Jquery中each的三种遍历方法
+https://blog.csdn.net/honey_th/article/details/7404273
+
+第三种：
+$.each(d,function (index,domEle){
+  d是要遍历的集合
+  index就是索引值
+  domEle 表示获取遍历每一个dom对
+});
+
+
+
+ $(".condition-tags span").on("click", function () {
+        $(".condition-tags span").removeClass("condition-tag-checkable-checked");
+        $(this).toggleClass("condition-tag-checkable-checked");
+    })
+
+ <div class="condition-list">
+                        <select name="ddlPraiseRange">
+                            <option value="0">全部</option>
+                            <option value="全部">全部</option>
+                            <option value="全部">全部</option>
+                            <option value="全部">全部</option>
+                        </select>
+                    </div>
+
+
+
+    //var rollset_offset = $(".tableContainer").offset().top-60;
+    //$("#SNDataX_APPBody").scroll(function (event) {
+    //    event.stopPropagation();
+    //    event.preventDefault();
+    //    var scrollTop = $("#SNDataX_APPBody").scrollTop();
+    //    //console.log(rollset_offset);
+    //    //console.log(scrollTop);
+    //    if (scrollTop < rollset_offset) {
+    //        $(".table-thead").removeAttr("style");
+    //    }
+    //    if (scrollTop >= rollset_offset) {
+
+    //        $(".table-thead").css({ "position": "fixed", "top": "60px", "right": "20px", "z-index": "10", "backgroundColor": "#2b2b2e", "width": "1700px" });
+    //    }
+    //    return;
+
+    //})
+
+
+    //var rollSet = $('.tableContainer .table-thead');
+    //var rollSetHei = rollSet.height();
+    //var offset = rollSet.offset().top-60;
+    //$("#SNDataX_APPBody").scroll(function () {
+    //    var scrollTop = $("#SNDataX_APPBody").scrollTop();
+    //    console.log(offset);//270
+    //    console.log(scrollTop);
+    //    if ( scrollTop <= offset ) {
+    //        rollSet.removeClass('theadfixed');
+    //    }
+    //    else {
+    //        rollSet.addClass('theadfixed');
+    //        console.log("ik");
+    //    }
+    //});
